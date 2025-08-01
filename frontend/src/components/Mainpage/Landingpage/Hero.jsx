@@ -1,6 +1,7 @@
 import React from 'react'
-
+import {useNavigate} from 'react-router-dom'
 const Hero = () => {
+  const navigate = useNavigate()
   return (
     <div className='relative top-20'>
       <div className='min-h-[91.2vh] flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 lg:px-20 py-8 lg:py-0'>
@@ -20,7 +21,7 @@ const Hero = () => {
             <button className='bg-[#38BDF8] text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-[#0EA5E9] transition-colors shadow-lg'>
               Find Services
             </button>
-            <button className='border-2 border-[#38BDF8] text-[#38BDF8] px-8 py-4 rounded-xl text-lg font-semibold hover:bg-[#38BDF8] hover:text-white transition-colors'>
+            <button className='border-2 border-[#38BDF8] text-[#38BDF8] px-8 py-4 rounded-xl text-lg font-semibold hover:bg-[#38BDF8] hover:text-white transition-colors' onClick={()=>navigate("/providerauth")}>
               Become a Provider
             </button>
           </div>

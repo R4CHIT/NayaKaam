@@ -6,6 +6,7 @@ import Userroute from "./middleware/Userroute";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import Main from "./components/Mainpage/Main";
+import ProviderMain from "./components/ProviderDetails/ProviderMain";
 import Details from "./components/Authentication/Resetpassword/Details";
 import Resetpassword from "./components/Authentication/Resetpassword/Resetpassword";
 import Navigation from "./components/Mainpage/Navbar/Navigation";
@@ -68,6 +69,7 @@ function AuthenticatedApp() {
     <>
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/providerauth" element={<ProviderMain />} />
       </Routes>
     </>
   );
