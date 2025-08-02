@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -187,10 +189,10 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'tiwarirachit50@gmail.com'  # ✅ your Gmail
-EMAIL_HOST_PASSWORD = 'dxiazkicfziwbhdg'   # ✅ paste app password WITHOUT SPACES
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
-DEFAULT_FROM_EMAIL = 'your-email@gmail.com'  # ✅ optional but clean
+DEFAULT_FROM_EMAIL = 'your-email@gmail.com' 
 
 
   # app_name.ModelName

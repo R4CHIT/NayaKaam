@@ -10,7 +10,7 @@ import ProviderMain from "./components/ProviderDetails/ProviderMain";
 import Details from "./components/Authentication/Resetpassword/Details";
 import Resetpassword from "./components/Authentication/Resetpassword/Resetpassword";
 import Navigation from "./components/Mainpage/Navbar/Navigation";
-
+import MainDashboard from "./components/Dashboard/MainDashboard"
 function App() {
   return (
     <AuthProvider>
@@ -70,6 +70,7 @@ function AuthenticatedApp() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/providerauth" element={<ProviderMain />} />
+        <Route path="/dashboard" element={<MainDashboard/>} />
       </Routes>
     </>
   );

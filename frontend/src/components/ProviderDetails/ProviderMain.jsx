@@ -3,7 +3,7 @@ import PersonalDetails from "./Stages/PersonalDetails";
 import JobDetails from "./Stages/JobDetails";
 import Location from "./Stages/Location";
 
-const ProviderMain = () => {
+const ProviderMain = ({setShow}) => {
   const [stage,setStage]=useState(0)
   const [providerData,setProviderData]=useState({
     fullname:'',
@@ -17,8 +17,8 @@ const ProviderMain = () => {
     jobtype:''
   })
   return (
-    <div className="flex justify-center items-center bg-[#0f1729] h-screen px-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-6">
+    <div className="fixed inset-0 z-10 flex justify-center items-center bg-black/50 backdrop-blur-sm h-screen px-4 " onClick={()=>setShow()}>
+      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-6" onClick={(e)=>e.stopPropagation()}>
         <h1 className="text-2xl font-bold text-center text-[#0f1729] mb-4">
           Become a Service Provider
         </h1>

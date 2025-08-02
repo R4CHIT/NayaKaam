@@ -5,7 +5,7 @@ function Main() {
   return (
     <div>
       <Navigation />
-    <Hero />
+      <Hero />
     </div>
   )
 }
