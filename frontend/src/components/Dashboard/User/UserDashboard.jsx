@@ -1,20 +1,26 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import SideBar from './SideBar';
 import HomePage from './HomePage';
 import Booking from './Booking';
+import Historyuser from './Historyuser';
+import Setting from '../Common/Setting';
 
 const UserDashboard = () => {
-  const [active,setActive] = useState(0)
+  const [active, setActive] = useState(0);
+
   return (
-    <div className="relative top-20 p-4">
-      
-      <div className='flex gap-5 h-full'>
-        <SideBar active={active} setActive={setActive}/>
-         <div className="min-h-auto w-full bg-[#0f1729] text-white px-6 py-10 flex flex-col gap-12">
-        {active == 0 && <HomePage />}
-        {active == 1 && <Booking />}
-        </div>
+    <div className="flex">
+      {/* Fixed Sidebar */}
+      <div className="fixed top-20 left-0 h-[calc(100vh-5rem)] w-64 bg-[#0f1729] shadow-lg z-40">
+        <SideBar active={active} setActive={setActive} />
+      </div>
+
+      {/* Scrollable Content */}
+      <div className="ml-64 flex-1 px-6 py-10 bg-[#0f1729] text-white min-h-screen">
+        {active === 0 && <HomePage />}
+        {active === 1 && <Booking />}
+        {active === 2 && <Historyuser />}
+        {active === 3 && <Setting />}
       </div>
     </div>
   );

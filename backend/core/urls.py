@@ -23,6 +23,7 @@ from rest_framework_simplejwt.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
+from userprofile.views import *
 
 urlpatterns = [
    path('admin/', admin.site.urls),
@@ -37,5 +38,8 @@ urlpatterns = [
      #Email veryfy
     path('api/reset-password/', SendResetEmail.as_view(), name='password_reset'),
     path('api/password-reset-confirm/', Changeresetpassword.as_view(), name='password_reset_confirm'),
+
+    #userprofile
+    path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation')
     
 ]

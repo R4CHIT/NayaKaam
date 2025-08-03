@@ -33,7 +33,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-6">
-      <form className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3">
+      <form className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3" onSubmit={handleSubmit}>
         <h2 className="text-4xl font-bold text-center text-orange-500 ">
           Login
         </h2>
@@ -58,9 +58,10 @@ function Login() {
           </span>
         )}
 
-        <Button title={loading ? <LoadingEffect /> : "Login"} type="submit" onClick={handleSubmit}>
+        <Button title={loading ? <LoadingEffect /> : "Login"} type={"submit"}>
           Login
         </Button>
+        
         <p className="text-center text-slate-700 text-sm">
           <Link to="/reset" className="hover:underline hover:text-cyan-400">
             forget password

@@ -21,12 +21,12 @@ const SideBar = ({active,setActive}) => {
           My Bookings
         </button>
 
-        <button className="flex items-center gap-3 hover:text-orange-400 transition-all">
+        <button className={`flex items-center gap-3 ${active==2 && "text-orange-400"} hover:text-orange-400 transition-all`} onClick={()=>setActive(2)}>
           <RiHistoryLine className="text-xl" />
           History
         </button>
 
-        <button className="flex items-center gap-3 hover:text-orange-400 transition-all">
+        <button className={`flex items-center gap-3 ${active==3 && "text-orange-400"} hover:text-orange-400 transition-all`} onClick={()=>setActive(3)}>
           <FiSettings className="text-xl" />
           Settings
         </button>

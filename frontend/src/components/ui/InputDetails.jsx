@@ -3,7 +3,7 @@ import React from 'react'
 const InputDetails = ({placeholder,title,type,ref,error,errormessage}) => {
   return (
   <div>
-        <label className="block text-sm font-medium text-gray-700">{title}</label>
+        <label className="block text-sm font-medium text-gray-500">{title}</label>
         <input
           type={type}
           placeholder={placeholder}

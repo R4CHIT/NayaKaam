@@ -38,6 +38,7 @@ function Register() {
   <form
     
     className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3"
+    onSubmit={handleSubmit}
   >
     <h2 className="text-4xl font-bold text-center text-orange-500 mb-8">
       Register
@@ -78,7 +79,7 @@ function Register() {
 
     <Button
       title={loading ?(<LoadingEffect />) : "Register"}
-      onClick ={handleSubmit}  
+      type={"submit"}
     />
 
 

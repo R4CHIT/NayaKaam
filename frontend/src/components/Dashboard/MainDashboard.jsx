@@ -5,7 +5,9 @@ const MainDashboard = () => {
   return (
     <div>
       <Navigation />
-      <UserDashboard/>
+      <div className='pt-20'>
+        <UserDashboard/>
+      </div>
     </div>
   )
 }
