@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PersonalDetails from "./Stages/PersonalDetails";
 import JobDetails from "./Stages/JobDetails";
 import Location from "./Stages/Location";
+import AuthContext from "../../context/AuthContext";
 
 const ProviderMain = ({setShow}) => {
+  const {user} = useContext(AuthContext)
+  const userId = user?.id
   const [stage,setStage]=useState(0)
   const [providerData,setProviderData]=useState({
+    user:userId,
     fullname:'',
-    contactno:'',
-    profileimage:'',
+    contactnumber:'',
+    profilepic:'',
     state:'',
     city:'',
     price:'',
     experience:'',
-    bio:'',
+    description:'',
     jobtype:''
   })
   return (

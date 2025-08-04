@@ -10,7 +10,7 @@ class ProviderDetails(models.Model):
     )
     fullname = models.CharField(max_length=50, blank=True, null=True)
     contactnumber = models.CharField(max_length=10)
-    profilepic = models.ImageField(upload_to='provider_profiles/', blank=True, null=True)
+    profilepic = models.ImageField(upload_to='media/ProvidersPictures/', blank=True, null=True)
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     experience = models.PositiveIntegerField()

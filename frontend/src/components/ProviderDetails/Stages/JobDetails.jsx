@@ -1,6 +1,10 @@
 import React, { useRef,useState } from "react";
 import InputDetails from "../../ui/InputDetails";
 import Button from "../../ui/Button";
+import becomeprovderApi from "../../api/providersApi/becomeprovderApi";
+
+
+
 const JobDetails = ({ setStage, providerData, setProviderData }) => {
   const priceRef = useRef();
   const experienceRef = useRef();
@@ -27,12 +31,13 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
     }else{
     setStage(0);
     let temp = providerData;
-    temp.price = priceRef.current?.value;
-    temp.experience = experienceRef.current?.value;
-    temp.bio = experienceRef.current?.value;
+    temp.price = Number(priceRef.current?.value);
+    temp.experience = Number(experienceRef.current?.value);
+    temp.description = experienceRef.current?.value;
     temp.jobtype = jobtypeRef.current?.value;
     setProviderData(temp);
     console.log(providerData);
+    becomeprovderApi(providerData)
     }
   };
   return (

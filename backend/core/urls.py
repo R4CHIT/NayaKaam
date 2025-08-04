@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/password-reset-confirm/', Changeresetpassword.as_view(), name='password_reset_confirm'),
 
     #userprofile
-    path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation')
+    path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation'),
+    path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile')
     
 ]

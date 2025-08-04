@@ -24,16 +24,11 @@ const PersonalDetails = ({setStage,providerData,setProviderData}) => {
       setError(0)
       errormessage.current = ''
     setStage(1)
-    setProviderData({
-    fullname:nameRef.current.value,
-    contactno:contactRef.current.value,
-    profileimage:profilepic.current.value,
-    state:'',
-    city:'',
-    price:'',
-    experience:'',
-    bio:'',
-    })
+    let temp = { ...providerData}
+    temp.fullname = nameRef.current.value
+    temp.contactnumber = contactRef.current.value
+    temp.profilepic = profilepic.current.files[0]
+    setProviderData(temp)
   }
   }
   return (
