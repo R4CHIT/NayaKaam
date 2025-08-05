@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
-
+import ProviderMain from '../../ProviderDetails/ProviderMain'
 const Navigation = () => {
   const navigate = useNavigate();
   const { Logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [show,setShow] = useState(false);
   const handleLogout = () => {
     Logout();
     console.log("logout");
@@ -26,10 +26,10 @@ const Navigation = () => {
           <Link to="/services">Services</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link to="/bookings">My Bookings</Link>
+          <Link>My Bookings</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link to="/become-provider">Become a Pro</Link>
+          <Link  onClick={()=>setShow(true)}>Become a Pro</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
           <Link to="/profile">Profile</Link>
@@ -90,6 +90,7 @@ const Navigation = () => {
           </div>
         </div>
       )}
+      {show && <ProviderMain setShow={setShow}/>}
     </div>
   );
 };

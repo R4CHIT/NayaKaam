@@ -9,14 +9,14 @@ import Main from "./components/Mainpage/Main";
 import ProviderMain from "./components/ProviderDetails/ProviderMain";
 import Details from "./components/Authentication/Resetpassword/Details";
 import Resetpassword from "./components/Authentication/Resetpassword/Resetpassword";
-import Navigation from "./components/Mainpage/Navbar/Navigation";
 import MainDashboard from "./components/Dashboard/MainDashboard"
+import ServicesMain from "./components/Services/ServicesMain";
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public Routes for Unauthenticated Users */}
+          {/* Public Routes */}
           <Route
             path="/login"
             element={
@@ -50,7 +50,7 @@ function App() {
             }
           />
 
-          {/* Private Routes - Authenticated Users Only */}
+          {/* Private Routes */}
           <Route
             path="/*"
             element={
@@ -64,6 +64,7 @@ function App() {
     </AuthProvider>
   );
 }
+ {/* Private Routes */}
 function AuthenticatedApp() {
   return (
     <>
@@ -71,6 +72,7 @@ function AuthenticatedApp() {
         <Route path="/" element={<Main />} />
         <Route path="/providerauth" element={<ProviderMain />} />
         <Route path="/dashboard" element={<MainDashboard/>} />
+        <Route path="/services" element={<ServicesMain /> }/>
       </Routes>
     </>
   );
