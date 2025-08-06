@@ -1,7 +1,9 @@
-import React, { useRef,useState } from "react";
+import React, { useEffect, useRef,useState } from "react";
 import InputDetails from "../../ui/InputDetails";
 import Button from "../../ui/Button";
 import becomeprovderApi from "../../api/providersApi/becomeprovderApi";
+import getCategory from "../../api/providersApi/getCategory";
+import Category from "../component/category";
 
 
 
@@ -12,7 +14,12 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
   const jobtypeRef = useRef();
   const errormessage = useRef();
   const [error, setError] = useState(0);
+  const [category,setCategory] =useState([])
+  useEffect(()=>{
+    getCategory(setCategory)
+  },[])
 
+  
   const handleProceed = () => {
     if(experienceRef.current.value == ''){
       setError(1)
@@ -63,13 +70,7 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
         error={error == 3 && true}
         errormessage={errormessage.current}
       />
-      <InputDetails
-        title={"Job Type:"}
-        placeholder={"What your Job type"}
-        ref={jobtypeRef}
-        error={error == 4 && true}
-        errormessage={errormessage.current}
-      />
+      <Category category={category}/>
       <Button title={"Proceed"} onClick={() => handleProceed()} />
     </>
   );

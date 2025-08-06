@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
 from django.conf import settings
 from django.conf.urls.static import static
 from userprofile.views import *
+from category.views import *
 
 urlpatterns = [
    path('admin/', admin.site.urls),
@@ -41,6 +42,9 @@ urlpatterns = [
 
     #userprofile
     path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation'),
-    path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile')
-    
+    path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile'),
+
+    #category
+    path('api/getcategory/',Get_Category.as_view(),name="GetCategory")
+
 ]

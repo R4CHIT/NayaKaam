@@ -28,13 +28,13 @@ const ProviderMain = ({setShow}) => {
         </h1>
 
         <form className="space-y-4">
-          {stage==0 && 
+          {stage==2 && 
           <PersonalDetails setStage={setStage} providerData={providerData} setProviderData={setProviderData}/>
           }
           {stage==1 && 
           <Location setStage={setStage} providerData={providerData} setProviderData={setProviderData}/>
           }
-          {stage==2 && 
+          {stage==0 && 
           <JobDetails setStage={setStage} providerData={providerData} setProviderData={setProviderData}/>
           }
         </form>

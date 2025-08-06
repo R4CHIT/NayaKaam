@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from category.models import Category
 
 class ProviderDetails(models.Model):
     user = models.ForeignKey(
@@ -16,7 +17,7 @@ class ProviderDetails(models.Model):
     experience = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=200)
-    jobtype = models.CharField(max_length=20)
+    jobtype = models.ForeignKey(Category,on_delete=models.CASCADE)
     joineddate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
