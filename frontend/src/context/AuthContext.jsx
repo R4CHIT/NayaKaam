@@ -43,7 +43,7 @@ useEffect(() => {
 
     setUser(credentials.username);
     setError(null);
-    navigate("/");
+    window.location.href = '/'
   } catch (err) {
     setError({ message: "Invalid credentials" });
   } finally {

@@ -18,7 +18,7 @@ const ProviderMain = ({setShow}) => {
     price:'',
     experience:'',
     description:'',
-    jobtype:''
+    jobtype:[]
   })
   return (
     <div className="fixed inset-0 z-10 flex justify-center items-center bg-black/50 backdrop-blur-sm h-screen px-4 " onClick={()=>setShow(false)}>
@@ -28,13 +28,13 @@ const ProviderMain = ({setShow}) => {
         </h1>
 
         <form className="space-y-4">
-          {stage==2 && 
+          {stage==0 && 
           <PersonalDetails setStage={setStage} providerData={providerData} setProviderData={setProviderData}/>
           }
           {stage==1 && 
           <Location setStage={setStage} providerData={providerData} setProviderData={setProviderData}/>
           }
-          {stage==0 && 
+          {stage==2 && 
           <JobDetails setStage={setStage} providerData={providerData} setProviderData={setProviderData}/>
           }
         </form>

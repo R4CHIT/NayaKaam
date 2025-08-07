@@ -43,3 +43,9 @@ class PasswordReset(serializers.Serializer):
 
 class ChangeresetPassword(serializers.Serializer):
     newpassword = serializers.CharField(required=True)
+
+class GetUserRoleSerializer(serializers.ModelSerializer): 
+    role = serializers.CharField(source='role.name')
+    class Meta:
+        model=UserRole
+        fields = ('role',)

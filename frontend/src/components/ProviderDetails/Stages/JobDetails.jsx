@@ -15,12 +15,16 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
   const errormessage = useRef();
   const [error, setError] = useState(0);
   const [category,setCategory] =useState([])
+  const [jobtype,setJobtype] = useState([])
   useEffect(()=>{
     getCategory(setCategory)
+    console.log(jobtype);
+    
   },[])
 
   
-  const handleProceed = () => {
+  const handleProceed = (e) => {
+    
     if(experienceRef.current.value == ''){
       setError(1)
       errormessage.current = 'Enter you demanding Price'
@@ -31,20 +35,16 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
     }else if(bioRef.current.value == ''){
       setError(3)
       errormessage.current = 'Enter your Bio'
-    
-    }else if(jobtypeRef.current.value == ''){
-      setError(4)
-      errormessage.current = 'Enter your Job type'
     }else{
-    setStage(0);
     let temp = providerData;
     temp.price = Number(priceRef.current?.value);
     temp.experience = Number(experienceRef.current?.value);
     temp.description = experienceRef.current?.value;
-    temp.jobtype = jobtypeRef.current?.value;
+    temp.jobtype = jobtype;
     setProviderData(temp);
     console.log(providerData);
     becomeprovderApi(providerData)
+    
     }
   };
   return (
@@ -70,8 +70,8 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
         error={error == 3 && true}
         errormessage={errormessage.current}
       />
-      <Category category={category}/>
-      <Button title={"Proceed"} onClick={() => handleProceed()} />
+      <Category category={category} setJobtype={setJobtype} jobtype={jobtype}/>
+      <Button title={"Proceed"} type={'button'} onClick={() => handleProceed()} />
     </>
   );
 };

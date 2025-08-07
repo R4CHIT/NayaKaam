@@ -7,7 +7,8 @@ const Location = ({ setStage, providerData, setProviderData }) => {
   const errormessage = useRef();
   const [error, setError] = useState(0);
 
-  const handleProceed = () => {
+  const handleProceed = (e) => {
+    
     if (stateRef.current.value == "") {
       setError(1);
       errormessage.current = "Enter your state Name";
@@ -40,7 +41,7 @@ const Location = ({ setStage, providerData, setProviderData }) => {
         errormessage={errormessage.current}
         ref={cityRef}
       />
-      <Button title={"Proceed"} onClick={() => handleProceed()} />
+      <Button title={"Proceed"} type={'button'} onClick={() => handleProceed()} />
     </>
   );
 };

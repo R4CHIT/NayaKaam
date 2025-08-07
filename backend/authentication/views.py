@@ -5,21 +5,19 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer , ChangePassword,PasswordReset,ChangeresetPassword
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer , ChangePassword,PasswordReset,ChangeresetPassword,GetUserRoleSerializer
 from .permissions import HasRole
 from rest_framework.permissions import IsAuthenticated as Isauthenticated
 from django.contrib.auth import authenticate, get_user_model
 User = get_user_model()
-from rest_framework import generics
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode
+from .models import *
 
 class UserView(generics.GenericAPIView):
     permission_classes = [Isauthenticated]
@@ -82,13 +80,8 @@ class changePassword(generics.GenericAPIView):
             return Response({"message":"Password Changed"},status=200)
         return Response({"message":"User not exist"},status=401)
 
-#Password reset :) XD
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.core.mail import send_mail
-from django.conf import settings
-from django.utils.http import urlsafe_base64_decode
+
+
 
 class SendResetEmail(generics.GenericAPIView):
     serializer_class = PasswordReset
@@ -136,3 +129,13 @@ class Changeresetpassword(generics.CreateAPIView):
         user.set_password(new_password)
         user.save()
         return Response({"message": "Password has been reset successfully."}, status=200)
+    
+class GetUserRole(generics.RetrieveAPIView):
+    permission_classes = [Isauthenticated]
+    def get(self, request, userId):
+        try:
+            role = UserRole.objects.get(user=userId)
+            serializer = GetUserRoleSerializer(role)
+            return Response(serializer.data)
+        except UserRole.DoesNotExist:
+            return Response({"error": "Role not found"}, status=404)

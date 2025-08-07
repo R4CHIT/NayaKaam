@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navigation from './Navbar/Navigation'
 import Hero from '../Mainpage/Landingpage/Hero'
-function Main() {
+import getUserRole from '../api/Role/getUserRole'
+import AuthContext from '../../context/AuthContext'
+function Main({role}) {
   return (
     <div>
-      <Navigation />
-      <Hero />
+      <Hero role={role}/>
     </div>
   )
 }

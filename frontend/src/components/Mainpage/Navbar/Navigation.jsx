@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
 import ProviderMain from '../../ProviderDetails/ProviderMain'
-const Navigation = () => {
+const Navigation = ({role}) => {
   const navigate = useNavigate();
   const { Logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +21,8 @@ const Navigation = () => {
         NayaKaam
       </div>
 
-      <div className="hidden md:flex text-[#F8FAFC] text-xl list-none gap-6 lg:gap-10">
+     {role != 'provider' ?(
+       <div className="hidden md:flex text-[#F8FAFC] text-xl list-none gap-6 lg:gap-10">
         <li className="hover:text-[#38BDF8] transition-colors">
           <Link to="/services">Services</Link>
         </li>
@@ -32,9 +33,25 @@ const Navigation = () => {
           <Link  onClick={()=>setShow(true)}>Become a Pro</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link to="/profile">Profile</Link>
+          <Link to="/profile">Chats</Link>
         </li>
       </div>
+     ):(
+       <div className="hidden md:flex text-[#F8FAFC] text-xl list-none gap-6 lg:gap-10">
+        <li className="hover:text-[#38BDF8] transition-colors">
+          <Link to="/services">Profile</Link>
+        </li>
+        <li className="hover:text-[#38BDF8] transition-colors">
+          <Link>My Bookings</Link>
+        </li>
+        <li className="hover:text-[#38BDF8] transition-colors">
+          <Link to={"/dashboard"}>Dashboard</Link>
+        </li>
+        <li className="hover:text-[#38BDF8] transition-colors">
+          <Link to="/profile">Chats</Link>
+        </li>
+      </div>
+     )}
 
       <button
         className="hidden md:block text-[#F8FAFC] text-[17px] px-3 py-2 bg-red-400 rounded-xl hover:bg-red-500 transition-colors"
@@ -79,7 +96,7 @@ const Navigation = () => {
               to="/profile"
               className="text-[#F8FAFC] text-lg hover:text-[#38BDF8] transition-colors py-2"
             >
-              Profile
+              Chat
             </Link>
             <button
               className="text-[#F8FAFC] text-[17px] px-3 py-2 bg-red-400 rounded-xl hover:bg-red-500 transition-colors w-fit"

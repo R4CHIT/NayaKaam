@@ -17,7 +17,7 @@ class ProviderDetails(models.Model):
     experience = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=200)
-    jobtype = models.ForeignKey(Category,on_delete=models.CASCADE)
+    jobtype = models.ManyToManyField(Category)
     joineddate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

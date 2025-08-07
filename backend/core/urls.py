@@ -45,6 +45,7 @@ urlpatterns = [
     path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile'),
 
     #category
-    path('api/getcategory/',Get_Category.as_view(),name="GetCategory")
+    path('api/getcategory/',Get_Category.as_view(),name="GetCategory"),
+    path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole")
 
 ]

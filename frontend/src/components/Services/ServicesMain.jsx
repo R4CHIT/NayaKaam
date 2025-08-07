@@ -5,7 +5,6 @@ import Services from './components/Services'
 const ServicesMain = () => {
   return (
     <div>
-        <Navigation />
         <Services />
     </div>
   )

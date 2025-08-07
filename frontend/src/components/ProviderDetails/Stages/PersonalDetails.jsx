@@ -9,6 +9,7 @@ const PersonalDetails = ({setStage,providerData,setProviderData}) => {
   const errormessage =useRef('')
   const [error,setError] = useState(0)
   const handleProceed=()=>{
+    
     if(nameRef.current.value==''){
       setError(1)
       errormessage.current = 'Enter your Name'     
@@ -36,7 +37,7 @@ const PersonalDetails = ({setStage,providerData,setProviderData}) => {
       <InputDetails title={"Full Name:"} placeholder={"Enter your full Name"}  ref={nameRef} error={error == 1 && true} errormessage={errormessage.current}/>
       <InputDetails  title={"Contact No:"} placeholder={"Enter your Conatact No"}  ref={contactRef} error={error == 2 && true} errormessage={errormessage.current}/>
       <InputDetails title={"Profile Pic"} placeholder={"Fill your Profile pic "} type={"file"} ref={profilepic} error={error == 3 && true} errormessage={errormessage.current}/>
-      <Button title={"Proceed"} onClick={()=>handleProceed()}/>
+      <Button title={"Proceed"} type={'button'} onClick={()=>handleProceed()}/>
     </>
   )
 }
