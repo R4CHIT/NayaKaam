@@ -12,13 +12,17 @@ const becomeprovderApi = async (providerData) => {
   formData.append("experience", providerData.experience);
   formData.append("price", providerData.price);
   formData.append("description", providerData.description);
-  formData.append("jobtype", providerData.jobtype);
+  providerData.jobtype.forEach((id) => {
+  formData.append("jobtype_ids", id);
+});
   const request = await axios.post("/api/userprofile/", formData, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
     },
   });
-  console.log("Done");
+  if(request.status == 200){
+    window.location.href = '/'
+  }
 };
 
 export default becomeprovderApi;

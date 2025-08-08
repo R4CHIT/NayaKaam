@@ -15,6 +15,8 @@ import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
 import { useEffect,useState } from "react";
 import getUserRole from "./components/api/Role/getUserRole";
+import Profilemain from "./components/profile/Profilemain";
+import EditProfile from "./components/profile/editProfile/EditProfile";
 function App() {
   
   return (
@@ -85,6 +87,8 @@ function AuthenticatedApp() {
         <Route path="/providerauth" element={<ProviderMain />} />
         <Route path="/dashboard" element={<MainDashboard/>} />
         <Route path="/services" element={<ServicesMain /> }/>
+        <Route path="/profile" element={<Profilemain /> }/>
+        <Route path="/editprofile" element={<EditProfile /> }/>
       </Routes>
     </>
   );

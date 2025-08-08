@@ -19,10 +19,7 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
   useEffect(()=>{
     getCategory(setCategory)
     console.log(jobtype);
-    
   },[])
-
-  
   const handleProceed = (e) => {
     
     if(experienceRef.current.value == ''){
@@ -42,9 +39,7 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
     temp.description = experienceRef.current?.value;
     temp.jobtype = jobtype;
     setProviderData(temp);
-    console.log(providerData);
     becomeprovderApi(providerData)
-    
     }
   };
   return (

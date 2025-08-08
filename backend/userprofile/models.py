@@ -14,6 +14,7 @@ class ProviderDetails(models.Model):
     profilepic = models.ImageField(upload_to='media/ProvidersPictures/', blank=True, null=True)
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
+    time= models.CharField(max_length=20,blank=True,null=True)
     experience = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=200)

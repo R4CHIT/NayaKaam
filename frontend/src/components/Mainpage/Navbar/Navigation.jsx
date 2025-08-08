@@ -39,7 +39,7 @@ const Navigation = ({role}) => {
      ):(
        <div className="hidden md:flex text-[#F8FAFC] text-xl list-none gap-6 lg:gap-10">
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link to="/services">Profile</Link>
+          <Link to="/profile">Profile</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
           <Link>My Bookings</Link>
@@ -48,7 +48,7 @@ const Navigation = ({role}) => {
           <Link to={"/dashboard"}>Dashboard</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link to="/profile">Chats</Link>
+          <Link to="/chat">Chats</Link>
         </li>
       </div>
      )}

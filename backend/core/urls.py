@@ -48,4 +48,4 @@ urlpatterns = [
     path('api/getcategory/',Get_Category.as_view(),name="GetCategory"),
     path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole")
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
