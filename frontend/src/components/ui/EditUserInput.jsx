@@ -8,14 +8,23 @@ const EditUserInput = ({
   error,
   errormessage,
   name,
-  provider
+  provider,
+  onChange // ✅ actually use this if provided
 }) => {
-    const handleChange = (e) => {
-    setProfile({
-      ...provider,
-      [name]: e.target.value,
-    });
+  const handleChange = (e) => {
+    if (type === "file") {
+      setProfile({
+        ...provider,
+        [name]: e.target.files[0], // ✅ store the File object
+      });
+    } else {
+      setProfile({
+        ...provider,
+        [name]: e.target.value,
+      });
+    }
   };
+
   return (
     <div>
       {title && (
@@ -27,7 +36,7 @@ const EditUserInput = ({
         type={type}
         placeholder={placeholder}
         value={type === "file" ? undefined : provider?.[name]}
-        onChange={handleChange}
+        onChange={onChange || handleChange} // ✅ use custom onChange if passed
         className="mt-1 w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#F97316]"
       />
       {error && <span className="text-red-600">{errormessage}</span>}

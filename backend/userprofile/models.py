@@ -11,7 +11,7 @@ class ProviderDetails(models.Model):
     )
     fullname = models.CharField(max_length=50, blank=True, null=True)
     contactnumber = models.CharField(max_length=10)
-    profilepic = models.ImageField(upload_to='media/ProvidersPictures/', blank=True, null=True)
+    profilepic = models.ImageField(upload_to='ProvidersPictures/', blank=True, null=True)
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     time= models.CharField(max_length=20,blank=True,null=True)
@@ -22,4 +22,4 @@ class ProviderDetails(models.Model):
     joineddate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.fullname} ({self.user.username})"
+        return f"{self.fullname} "

@@ -28,8 +28,7 @@ from rest_framework.authentication import SessionAuthentication
 
 
 class UpdateApiView(APIView):
-   
-    
+    permission_classes=[IsAuthenticated]
     def patch(self, request, userId):
         try:
             profile = ProviderDetails.objects.get(user=userId)

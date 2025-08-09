@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import updateProviderProfile from "../../api/providersApi/updateProviderProfile";
 import AuthContext from '../../../context/AuthContext'
 const Card = ({ provider, setEdit, edit }) => {
-  const navigate = useNavigate();
   const {user} = useContext(AuthContext);
   const userId = user?.id
   console.log(userId);
@@ -12,7 +11,8 @@ const Card = ({ provider, setEdit, edit }) => {
     setEdit(true);
   };
   const handleUpdateData=()=>{
-    updateProviderProfile(provider, userId)
+    
+    updateProviderProfile(provider, userId,setEdit)
   }
   return (
     <div className="min-h-screen bg-white flex justify-center items-start pt-20 md:pt-25 pb-5">
