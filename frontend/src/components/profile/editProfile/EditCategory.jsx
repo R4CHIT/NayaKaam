@@ -1,30 +1,53 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-
-const Category = ({ category, setJobtype, jobtype}) => {
+import getCategory from "../../api/providersApi/getCategory";
+const EditCategory = ({
+  setJobtype,
+  jobtype,
+  setProfile,
+  provider,
+}) => {
+    const [category, setCategory] = useState([]);
+  useEffect(() => {
+    getCategory(setCategory);
+    setJobtype(provider.jobtype.map((item) => item.id));
+  }, []);
   const options = category.map((item) => ({
     value: item.id,
     label: item.category,
   }));
+
   const [selectedOptions, setSelectedOptions] = useState([]);
+
   useEffect(() => {
-  if (Array.isArray(jobtype)) {
-    const selected = options.filter((opt) =>
-      jobtype.some((jt) => jt.id === opt.value || jt === opt.value)
-    );
-    setSelectedOptions((prev) => {
-      const same =
-        prev.length === selected.length &&
-        prev.every((p, i) => p.value === selected[i].value);
-      return same ? prev : selected;
-    });
-  }
-}, [jobtype, options]);
-  
+    if (Array.isArray(jobtype)) {
+      const selected = options.filter((opt) =>
+        jobtype.some((jt) => jt.id === opt.value || jt === opt.value)
+      );
+
+      const isSame =
+        selectedOptions.length === selected.length &&
+        selectedOptions.every((p, i) => p.value === selected[i].value);
+
+      if (!isSame) {
+        setSelectedOptions(selected);
+      }
+    }
+  }, [jobtype, options]);
   const handleChange = (selected) => {
-    setSelectedOptions(selected);
-    setJobtype(selected.map((opt) => opt.value));
-  };
+  setSelectedOptions(selected);
+
+  const jobtypeData = selected
+    ? selected.map((opt) => ({ id: opt.value, category: opt.label }))
+    : [];
+
+  setJobtype(jobtypeData);
+
+  setProfile({
+    ...provider,
+    jobtype: jobtypeData,  // Use the fresh data here
+  });
+};
 
   return (
     <div className="text-white">
@@ -38,7 +61,6 @@ const Category = ({ category, setJobtype, jobtype}) => {
         classNamePrefix="select"
         placeholder="Select job types..."
       />
-
       <div className="mt-3 text-gray-500">
         Selected:{" "}
         {selectedOptions.length > 0
@@ -53,4 +75,4 @@ const Category = ({ category, setJobtype, jobtype}) => {
   );
 };
 
-export default Category;
+export default EditCategory;

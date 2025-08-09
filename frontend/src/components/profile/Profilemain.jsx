@@ -9,16 +9,17 @@ const Profilemain = () => {
     getUserProfile(setProfile);
   }, []);
   const handleEditProfile = () => {
-    console.log("Edit Profile Clicked");
+    
   };
-
+  
   return (
     <>
       {edit ? (
-        <EditProfile provider={profile} setProfile={setProfile}/>
+        <EditProfile provider={profile} edit={edit} setEdit={setEdit} setProfile={setProfile}/>
       ) : (
         <div className="min-h-screen">
           <Card
+            
             provider={profile}
             onEdit={handleEditProfile}
             setEdit={setEdit}

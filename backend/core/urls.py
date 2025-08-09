@@ -43,9 +43,14 @@ urlpatterns = [
     #userprofile
     path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation'),
     path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile'),
-
+    
+     
     #category
     path('api/getcategory/',Get_Category.as_view(),name="GetCategory"),
-    path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole")
+
+    #Provider roles
+    path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole"),
+    
+    path('api/updateprofile/<int:userId>/', UpdateApiView.as_view(), name="UpdateProfile"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

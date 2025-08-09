@@ -139,3 +139,5 @@ class GetUserRole(generics.RetrieveAPIView):
             return Response(serializer.data)
         except UserRole.DoesNotExist:
             return Response({"error": "Role not found"}, status=404)
+        
+
