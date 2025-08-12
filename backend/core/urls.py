@@ -43,6 +43,7 @@ urlpatterns = [
     #userprofile
     path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation'),
     path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile'),
+    path('api/get/provider/',GetALLUserView.as_view(),name='getProvider'),
     
      
     #category

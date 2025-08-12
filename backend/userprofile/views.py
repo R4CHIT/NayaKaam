@@ -40,3 +40,12 @@ class UpdateApiView(APIView):
             serializer.save()
             return Response({"message": "Update Successfully"})
         return Response(serializer.errors, status=400)
+    
+class GetALLUserView(generics.GenericAPIView):
+    permission_classes =[IsAuthenticated]
+    def get(self, request):
+        profile =ProviderDetails.objects.all()
+        serializers = ProviderDetailSerializers(profile,many=True)
+    
+        return Response(serializers.data)
+    
