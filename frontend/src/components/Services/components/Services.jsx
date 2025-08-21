@@ -129,22 +129,21 @@ const Services = () => {
       icon: FaPercent,
     },
   ];
-
   const filteredServices =
-    selectedCategory === "all"
-      ? popularServices
-      : popularServices.filter(
-          (service) => service.category === selectedCategory
-        );
-
+  selectedCategory === "all"
+  ? popularServices
+  : popularServices.filter(
+    (service) => service.category.toLowerCase() === selectedCategory.toLowerCase()
+  );
+  console.log(selectedCategory)
+        console.log(filteredServices)
   const searchFilteredServices = filteredServices.filter((service) =>
-    service.title.toLowerCase().includes(searchQuery.toLowerCase())
+    service.category?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-6xl mx-auto px-4">
-       
         <div className="py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {offers.map((offer) => (
@@ -200,7 +199,6 @@ const Services = () => {
           </div>
         </div>
 
-        
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">
             Categories
@@ -216,15 +214,11 @@ const Services = () => {
           </div>
         </div>
 
-       
-       <ServicesGrid
+        <ServicesGrid
           selectedCategory={selectedCategory}
           categories={categories}
           searchFilteredServices={searchFilteredServices}
         />
-
-        
-        
       </div>
     </div>
   );

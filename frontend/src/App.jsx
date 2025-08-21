@@ -17,6 +17,7 @@ import { useEffect,useState } from "react";
 import getUserRole from "./components/api/Role/getUserRole";
 import Profilemain from "./components/profile/Profilemain";
 import EditProfile from "./components/profile/editProfile/EditProfile";
+import ProviderMainDetail from './components/ProviderList/ProviderMain'
 function App() {
   
   return (
@@ -89,6 +90,7 @@ function AuthenticatedApp() {
         <Route path="/services" element={<ServicesMain /> }/>
         <Route path="/profile" element={<Profilemain /> }/>
         <Route path="/editprofile" element={<EditProfile /> }/>
+        <Route path="/booking/:id" element={<ProviderMainDetail /> }/>
       </Routes>
     </>
   );

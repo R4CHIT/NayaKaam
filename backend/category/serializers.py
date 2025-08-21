@@ -6,3 +6,7 @@ class GetCategorySerializers(serializers.ModelSerializer):
     class Meta:
         model=Category
         fields= ("id","category",)
+class GetAllCategorySerializers(serializers.ModelSerializer):
+    class Meta:
+        model=Category
+        fields= "__all__"

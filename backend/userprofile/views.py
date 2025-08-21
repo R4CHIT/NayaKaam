@@ -49,3 +49,11 @@ class GetALLUserView(generics.GenericAPIView):
     
         return Response(serializers.data)
     
+class GetProviderThroughCategory(generics.RetrieveAPIView):
+    permission_classes =[IsAuthenticated]
+
+    def get(self,request,CategoryId):
+        profile = ProviderDetails.objects.filter(jobtype__id=CategoryId)
+        serializers = ProviderDetailCategorySerializers(profile,many=True)
+    
+        return Response(serializers.data)

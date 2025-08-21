@@ -23,3 +23,8 @@ class ProviderDetailSerializers(serializers.ModelSerializer):
         if jobtypes is not None:
             provider.jobtype.set(jobtypes)
         return provider
+    
+class ProviderDetailCategorySerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ProviderDetails
+        exclude  = ('user',)

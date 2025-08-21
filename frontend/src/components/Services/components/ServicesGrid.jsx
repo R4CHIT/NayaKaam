@@ -3,7 +3,9 @@ import { FaFire } from 'react-icons/fa'
 import { FaChevronRight } from 'react-icons/fa'
 import { FaHeart,FaStar } from 'react-icons/fa'
 import { BiTime } from 'react-icons/bi'
+import {useNavigate} from 'react-router-dom'
 const ServicesGrid = ({selectedCategory,searchFilteredServices,categories}) => {
+  const navigate = useNavigate()
   return (
     <>
       <div className="mb-8">
@@ -23,7 +25,7 @@ const ServicesGrid = ({selectedCategory,searchFilteredServices,categories}) => {
                 <div className="relative">
                   <img 
                     src={service.image} 
-                    alt={service.title}
+                    alt={service.category}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-3 left-3 flex space-x-2">
@@ -46,7 +48,7 @@ const ServicesGrid = ({selectedCategory,searchFilteredServices,categories}) => {
 
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
-                    {service.title}
+                    {service.category}
                   </h3>
                   
                   <div className="flex items-center space-x-3 mb-3 text-sm text-gray-600">
@@ -76,8 +78,8 @@ const ServicesGrid = ({selectedCategory,searchFilteredServices,categories}) => {
                         <span className="text-sm text-gray-400 line-through">₹{service.originalPrice}</span>
                       )}
                     </div>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
-                      Book Now
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" onClick={()=>navigate('/booking/'+service.id)}>
+                      Book Now 
                     </button>
                   </div>
                 </div>

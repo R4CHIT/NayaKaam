@@ -11,3 +11,11 @@ class Get_Category(generics.RetrieveAPIView):
         category = Category.objects.all()
         serializers = GetCategorySerializers(category, many=True)
         return Response(serializers.data)
+    
+class Get_AllCtegory(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        category = Category.objects.all()
+        serializers = GetAllCategorySerializers(category,many=True)
+        return Response(serializers.data,status=200)

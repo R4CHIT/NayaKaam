@@ -44,10 +44,12 @@ urlpatterns = [
     path('api/userprofile/',ProviderDetailView.as_view(),name='Providerprofilecreation'),
     path('api/get/userprofile/',ProviderDetailGetView.as_view(),name='getproviderprofile'),
     path('api/get/provider/',GetALLUserView.as_view(),name='getProvider'),
+    path('api/get/categoryprovider/<int:CategoryId>/',GetProviderThroughCategory.as_view(),name='getProvider'),
     
      
     #category
     path('api/getcategory/',Get_Category.as_view(),name="GetCategory"),
+    path('api/getcategoryDetails/',Get_AllCtegory.as_view(),name="GetCategory"),
 
     #Provider roles
     path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole"),
