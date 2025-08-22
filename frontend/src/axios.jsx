@@ -5,25 +5,34 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-    response => response,
-    async error => {
-        const originRequest = error.config;
-        if (error.response.status === 401 && !originRequest._retry) {
-            originRequest._retry = true;
-            try {
-                const refreshToken = localStorage.getItem("refreshtoken");
-                const response = await instance.post("/api/token/refresh/", {
-                    refresh: refreshToken
-                });
-                const { access } = response.data;
-                localStorage.setItem("accesstoken", access);
-                instance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-                originRequest.headers["Authorization"] = `Bearer ${access}`;
-                return instance(originRequest);
-            } catch (err) {
-            }
-        }
-        return Promise.reject(error);
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const refreshToken = localStorage.getItem("refreshtoken");
+        const res = await instance.post("/api/token/refresh/", { refresh: refreshToken });
+
+        const { access, refresh } = res.data;
+        localStorage.setItem("accesstoken", access);
+        if (refresh) localStorage.setItem("refreshtoken", refresh);
+
+        instance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+        originalRequest.headers["Authorization"] = `Bearer ${access}`;
+
+        return instance(originalRequest);
+      } catch (err) {
+        // 🚨 Refresh also failed → force logout
+        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("refreshtoken");
+        window.location.href = "/login"; 
+      }
     }
+
+    return Promise.reject(error);
+  }
 );
+
 export default instance;
