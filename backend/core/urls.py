@@ -25,7 +25,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from userprofile.views import *
 from category.views import *
-
+from booking.views import *
 urlpatterns = [
    path('admin/', admin.site.urls),
     path('api/auth/register/', RegisterView.as_view(), name='auth_register_'),
@@ -55,5 +55,9 @@ urlpatterns = [
     path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole"),
     
     path('api/updateprofile/<int:userId>/', UpdateApiView.as_view(), name="UpdateProfile"),
+
+    #Booking
+    path('api/booking/',MakeBooking.as_view()),
+    path('api/getbooking/',GetBooking.as_view())
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
