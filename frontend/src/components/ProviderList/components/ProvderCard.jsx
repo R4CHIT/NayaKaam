@@ -1,6 +1,8 @@
-import React from "react";
-
-const ProvderCard = ({ provider }) => {
+import React, { useState } from "react";
+import BookingModal from "../modal/BookingModal";
+const ProvderCard = ({provider}) => {
+  const [showModal,setShowModal] = useState(false)
+  const [status,setStatus]=useState(false)
 const now = new Date();
 const currentHour = now.getHours();
 
@@ -21,6 +23,10 @@ const endHour = convertTo24(end);
 
 const show = currentHour >= startHour && currentHour < endHour;
 
+const handleBooking=async()=>{
+ setShowModal((prev)=>!prev)
+ 
+}
   return (
     <div className="bg-white shadow-md rounded-2xl p-5 flex flex-col text-left hover:shadow-xl transition duration-300">
       <div className="flex items-center gap-4">
@@ -48,11 +54,12 @@ const show = currentHour >= startHour && currentHour < endHour;
   className={`mt-4 px-4 py-2 text-white rounded-xl transition ${
     show ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-900 cursor-not-allowed"
   }`}
-  disabled={!show}
->
-  Book Now
-</button>
-
+  disabled={!show || status}
+  onClick={()=>handleBooking(provider.userId)}
+  >
+  {!status ? 'Book Now':'Booked'}
+  </button>
+  {showModal && <BookingModal setShowModal={setShowModal} provider={provider.userId}  setStatus={setStatus}/>}
     </div>
   );
 };

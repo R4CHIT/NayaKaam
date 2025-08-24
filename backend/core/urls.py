@@ -27,14 +27,13 @@ from userprofile.views import *
 from category.views import *
 from booking.views import *
 urlpatterns = [
-   path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('api/auth/register/', RegisterView.as_view(), name='auth_register_'),
     path('api/auth/login/', loginView.as_view(), name='auth_login_'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("api/auth/user/", UserView.as_view(),name="user_view"), 
     path('api/auth/changepassword/',changePassword.as_view(),name='change_password'),
-
 
      #Email veryfy
     path('api/reset-password/', SendResetEmail.as_view(), name='password_reset'),

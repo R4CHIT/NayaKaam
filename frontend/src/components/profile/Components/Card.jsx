@@ -4,14 +4,11 @@ import updateProviderProfile from "../../api/providersApi/updateProviderProfile"
 import AuthContext from '../../../context/AuthContext'
 const Card = ({ provider, setEdit, edit }) => {
   const {user} = useContext(AuthContext);
-  const userId = user?.id
-  console.log(userId);
-  
+  const userId = user?.id  
   const handleUpdate = () => {
     setEdit(true);
   };
   const handleUpdateData=()=>{
-    
     updateProviderProfile(provider, userId,setEdit)
   }
   return (

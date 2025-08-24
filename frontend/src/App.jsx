@@ -14,10 +14,10 @@ import Navigation from "./components/Mainpage/Navbar/Navigation";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
 import { useEffect,useState } from "react";
-import getUserRole from "./components/api/Role/getUserRole";
 import Profilemain from "./components/profile/Profilemain";
 import EditProfile from "./components/profile/editProfile/EditProfile";
 import ProviderMainDetail from './components/ProviderList/ProviderMain'
+import MyBookingsPage from "./components/MyBookings/BookingMain";
 function App() {
   
   return (
@@ -74,26 +74,31 @@ function App() {
 }
  {/* Private Routes */}
 function AuthenticatedApp() {
-  const {user} = useContext(AuthContext)
-  const userId =user?.id
-  const [role,setRole] = useState('')
-  useEffect(()=>{
-    getUserRole(userId,setRole)
-  },[])
+  const { getUserRole, user } = useContext(AuthContext);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    if (user?.id) {
+      getUserRole(user.id, setRole);
+    }
+  }, [user]);
+
   return (
     <>
-    <Navigation role={role}/>
+      <Navigation role={role} />
       <Routes>
-        <Route path="/" element={<Main role={role}/>} />
+        <Route path="/" element={<Main role={role} />} />
         <Route path="/providerauth" element={<ProviderMain />} />
-        <Route path="/dashboard" element={<MainDashboard/>} />
-        <Route path="/services" element={<ServicesMain /> }/>
-        <Route path="/profile" element={<Profilemain /> }/>
-        <Route path="/editprofile" element={<EditProfile /> }/>
-        <Route path="/booking/:id" element={<ProviderMainDetail /> }/>
+        <Route path="/dashboard" element={<MainDashboard />} />
+        <Route path="/services" element={<ServicesMain />} />
+        <Route path="/profile" element={<Profilemain />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/booking/:id" element={<ProviderMainDetail />} />
+        <Route path="mybooking" element={<MyBookingsPage />}/>
       </Routes>
     </>
   );
 }
+
 
 export default App;

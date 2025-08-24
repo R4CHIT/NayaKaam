@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import ProvderCard from "./components/ProvderCard";
 import { useParams, useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import getProviderList from "../api/Services/getProviderList";
+import BookingModal from "./modal/BookingModal";
 
 const ProviderMainDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [providers, setProviders] = useState([]);
+  const [provider, setProvider] = useState([]);
+  
 
   useEffect(() => {
     getProviderList(id, setProviders);
@@ -29,7 +32,7 @@ const ProviderMainDetail = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {providers.map((provider) => (
-              <ProvderCard key={provider.id} provider={provider} />
+              <ProvderCard key={provider.id} provider={provider} setProvider={setProvider} />
             ))}
           </div>
         </>

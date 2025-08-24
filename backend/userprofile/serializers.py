@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import *
 from category.models import *
 from category.serializers import *
+from authentication.serializers import *
 class ProviderDetailSerializers(serializers.ModelSerializer):
     jobtype = GetCategorySerializers(many=True, read_only=True)
     jobtype_ids = serializers.PrimaryKeyRelatedField(
@@ -25,6 +26,7 @@ class ProviderDetailSerializers(serializers.ModelSerializer):
         return provider
     
 class ProviderDetailCategorySerializers(serializers.ModelSerializer):
+    userId = serializers.PrimaryKeyRelatedField(source='user',read_only = True)
     class Meta:
         model = ProviderDetails
         exclude  = ('user',)

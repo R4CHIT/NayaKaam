@@ -15,10 +15,10 @@ class MakeBooking(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        customer = self.request.user
-        serializer.save(customer=customer)
+        id = self.request.user
+        serializer.save(customer=id,provider=id)
         return super().perform_create(serializer)
-    
+
 
 class GetBooking(generics.RetrieveAPIView):
     serializer_class = BookingSerializers

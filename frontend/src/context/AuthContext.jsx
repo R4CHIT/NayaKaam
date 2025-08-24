@@ -82,8 +82,14 @@ const register = async (credentials,navigate) => {
 
   
 
+  const getUserRole = async(userId,setRole) => {
+  const response = await axios.get(`api/getRole/${userId}/`)
+  if(response.status == 200){
+    setRole(response.data.role)
+  }
+}
   return (
-    <AuthContext.Provider value={{ user,loading, Login, Logout , register,error}}>
+    <AuthContext.Provider value={{ user,loading, Login, Logout , register,error,getUserRole}}>
       {children}
     </AuthContext.Provider>
   );

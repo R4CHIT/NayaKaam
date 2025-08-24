@@ -136,7 +136,6 @@ const Services = () => {
     (service) => service.category.toLowerCase() === selectedCategory.toLowerCase()
   );
   console.log(selectedCategory)
-        console.log(filteredServices)
   const searchFilteredServices = filteredServices.filter((service) =>
     service.category?.toLowerCase().includes(searchQuery.toLowerCase())
   );
