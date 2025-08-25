@@ -32,7 +32,7 @@ const Hero = ({ role }) => {
               </button>
               <button
                 className="border-2 border-[#38BDF8] text-[#38BDF8] px-8 py-4 rounded-xl text-lg font-semibold hover:bg-[#38BDF8] hover:text-white transition-colors"
-                onClick={() => setShow(true)}
+                onClick={() => navigate}
               >
                 Become a Provider
               </button>

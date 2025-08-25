@@ -27,10 +27,10 @@ const Navigation = ({role}) => {
           <Link to="/services">Services</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link>My Bookings</Link>
+          <Link to={'/mybooking'}>My Bookings</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
-          <Link  onClick={()=>setShow(true)}>Become a Pro</Link>
+          <Link to={'/becomeapro'}>Become a Pro</Link>
         </li>
         <li className="hover:text-[#38BDF8] transition-colors">
           <Link to="/profile">Chats</Link>

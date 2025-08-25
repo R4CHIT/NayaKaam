@@ -90,11 +90,12 @@ function AuthenticatedApp() {
         <Route path="/" element={<Main role={role} />} />
         <Route path="/providerauth" element={<ProviderMain />} />
         <Route path="/dashboard" element={<MainDashboard />} />
-        <Route path="/services" element={<ServicesMain />} />
+        <Route path="services" element={<ServicesMain />} />
         <Route path="/profile" element={<Profilemain />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/booking/:id" element={<ProviderMainDetail />} />
         <Route path="mybooking" element={<MyBookingsPage />}/>
+        <Route path="/becomeapro" element={<ProviderMain />}/>
       </Routes>
     </>
   );

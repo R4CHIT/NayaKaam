@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import bookaServiceApi from "../../api/Booking/bookaServiceApi";
 import swal from "sweetalert";
+import InputDetailsState from "../../ui/InputDetailsState";
 
-const BookingModal = ({ setShowModal, provider ,setStatus}) => {
+const BookingModal = ({ setShowModal, provider, setStatus }) => {
   const [note, setNote] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleBook = async () => {
@@ -25,6 +27,7 @@ const BookingModal = ({ setShowModal, provider ,setStatus}) => {
       notes: note,
       provider: provider,
       booking_time: bookingTime.toISOString(),
+      location: location,
     };
 
     setLoading(true);
@@ -38,7 +41,7 @@ const BookingModal = ({ setShowModal, provider ,setStatus}) => {
       });
 
       setShowModal(false);
-      setStatus(true)
+      setStatus(true);
     } catch (err) {
       console.error("Booking error:", err);
       swal("Error!", "Something went wrong. Please try again.", "error");
@@ -46,53 +49,69 @@ const BookingModal = ({ setShowModal, provider ,setStatus}) => {
       setLoading(false);
     }
   };
-  const today = new Date().toISOString().split("T")[0];
+
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+      className="fixed inset-0 flex items-center p-10 justify-center bg-black/40 backdrop-blur-sm z-50"
       onClick={() => setShowModal(false)}
     >
       <div
-        className="bg-white rounded-2xl shadow-lg p-6 w-96"
+        className="bg-white rounded-2xl shadow-xl w-[490px] p-6 relative animate-fadeIn"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl font-semibold mb-4">Confirm Booking</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
+          Confirm Your Booking
+        </h2>
+        <p className="text-sm text-gray-500 mb-6 text-center">
+          Fill in the details below to book your service.
+        </p>
+
+        <label className="block mb-2 text-sm font-medium text-gray-700">
+          Notes to Provider
+        </label>
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder="Write a note to the provider..."
-          className="w-full h-24 p-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          placeholder="Write a note... (e.g. Bring your own tools)"
+          className="w-full h-24 p-3 border rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 text-sm"
         />
 
-        <label className="block mb-1 font-medium">Select Booking Date:</label>
-        <input
+        <InputDetailsState
+          label="Booking Date"
           type="date"
           value={date}
-          min={today}
           onChange={(e) => setDate(e.target.value)}
-          className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          required
         />
 
-        <label className="block mb-1 font-medium">Select Booking Time:</label>
-        <input
+        <InputDetailsState
+          label="Booking Time"
           type="time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          required
         />
 
-        <div className="flex justify-end gap-3 mt-4">
+        <InputDetailsState
+          label="Service Location"
+          type="text"
+          placeholder="Enter your address"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+
+        <div className="flex justify-end gap-3 mt-6">
           <button
             type="button"
             onClick={() => setShowModal(false)}
-            className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+            className="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 transition"
             disabled={loading}
           >
             Cancel
           </button>
           <button
             type="button"
-            className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+            className="px-5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-md transition"
             onClick={handleBook}
             disabled={loading}
           >
