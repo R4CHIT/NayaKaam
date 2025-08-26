@@ -57,6 +57,16 @@ urlpatterns = [
 
     #Booking
     path('api/booking/',MakeBooking.as_view()),
-    path('api/getbooking/',GetBooking.as_view())
+    path('api/getbooking/',GetBooking.as_view()),
+
+    #booking Summary
+    path("api/getBookingSummary", getBookingSummary.as_view(), name=""),
+
+    #GetMontlyEarning
+    path("api/getMonthlyEarning", GetMontlyEarning.as_view(), name=""),
+
+    #GetMonthlyBooking
+    path("api/getMonthlyBooking", GetMonthlyBooking.as_view(), name="")
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

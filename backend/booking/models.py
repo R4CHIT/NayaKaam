@@ -26,6 +26,7 @@ class Booking(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     booking_time = models.DateTimeField()
+    price = models.BigIntegerField(null=True,blank=True)
     notes = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=255,null=True,blank=True)
 
