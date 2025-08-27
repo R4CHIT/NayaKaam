@@ -91,7 +91,6 @@ const Historyuser = () => {
           ))}
         </div>
 
-        {/* Empty State */}
         {workHistory.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔧</div>

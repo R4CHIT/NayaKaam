@@ -54,7 +54,7 @@ const handleBooking=async()=>{
   className={`mt-4 px-4 py-2 text-white rounded-xl transition ${
     show ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-900 cursor-not-allowed"
   }`}
-  disabled={!show || status}
+  disabled={show || status}
   onClick={()=>handleBooking(provider.userId)}
   >
   {!status ? 'Book Now':'Booked'}

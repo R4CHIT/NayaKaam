@@ -24,6 +24,7 @@ class Booking(models.Model):
         ],
         default="pending"
     )
+    service = models.CharField(max_length=100,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     booking_time = models.DateTimeField()
     price = models.BigIntegerField(null=True,blank=True)

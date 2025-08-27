@@ -9,27 +9,32 @@ from .models import *
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum,Count
 import calendar
+from userprofile.models import ProviderDetails
+from .pagination import *
+
+
 # Create your views here.
 
 class MakeBooking(generics.CreateAPIView):
     serializer_class = BookingSerializers
     permission_classes = [IsAuthenticated]
+    
 
     def perform_create(self, serializer):
-        id = self.request.user
-        serializer.save(customer=id,provider=id)
+        customer = self.request.user
+        provider_id = self.request.data.get('provider') 
+        price = ProviderDetails.objects.get(user=provider_id)
+        serializer.save(customer=customer,price=price.price)
         return super().perform_create(serializer)
 
 
-class GetBooking(generics.RetrieveAPIView):
+class GetBooking(generics.ListAPIView):
     serializer_class = BookingSerializers
     permission_classes = [IsAuthenticated]
-
-    def get(self,request):
-        user = request.user
-        booking=Booking.objects.filter(customer = user )
-        serializers = BookingSerializers(booking,many=True)
-        return Response(serializers.data)
+    pagination_class = CustomPagination
+    
+    def get_queryset(self):
+        return Booking.objects.filter(provider=self.request.user).order_by('-id')
     
 class getBookingSummary(generics.GenericAPIView):
     permission_classes=[IsAuthenticated]

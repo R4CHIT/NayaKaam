@@ -53,8 +53,9 @@ urlpatterns = [
     #Provider roles
     path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole"),
     
+    #profile update
     path('api/updateprofile/<int:userId>/', UpdateApiView.as_view(), name="UpdateProfile"),
-
+    
     #Booking
     path('api/booking/',MakeBooking.as_view()),
     path('api/getbooking/',GetBooking.as_view()),

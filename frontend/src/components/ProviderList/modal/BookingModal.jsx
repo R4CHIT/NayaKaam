@@ -8,6 +8,7 @@ const BookingModal = ({ setShowModal, provider, setStatus }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
+  const [service, setService] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleBook = async () => {
@@ -23,11 +24,13 @@ const BookingModal = ({ setShowModal, provider, setStatus }) => {
       swal("Oops!", "Booking time cannot be in the past.", "warning");
       return;
     }
+    
     const data = {
       notes: note,
       provider: provider,
       booking_time: bookingTime.toISOString(),
       location: location,
+      service:service
     };
 
     setLoading(true);
@@ -56,7 +59,7 @@ const BookingModal = ({ setShowModal, provider, setStatus }) => {
       onClick={() => setShowModal(false)}
     >
       <div
-        className="bg-white rounded-2xl shadow-xl w-[490px] p-6 relative animate-fadeIn"
+        className="bg-white rounded-2xl shadow-xl w-[520px] p-6 relative animate-fadeIn"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
@@ -98,6 +101,13 @@ const BookingModal = ({ setShowModal, provider, setStatus }) => {
           placeholder="Enter your address"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
+        />
+        <InputDetailsState
+          label="Service"
+          type="text"
+          placeholder="Enter your need service"
+          value={service}
+          onChange={(e) => setService(e.target.value)}
         />
 
         <div className="flex justify-end gap-3 mt-6">

@@ -31,7 +31,7 @@ const UserDashboard = () => {
       </button>
 
       
-      <div className="flex-1 px-6 py-15 bg-gray-50 text-gray-800 min-h-screen md:ml-64">
+      <div className="flex-1 px-6 py-10 bg-gray-50 text-gray-800 min-h-screen md:ml-64">
         {active === 0 && <HomePage />}
         {active === 1 && <Booking />}
         {active === 2 && <Historyuser />}
