@@ -18,6 +18,7 @@ import Profilemain from "./components/profile/Profilemain";
 import EditProfile from "./components/profile/editProfile/EditProfile";
 import ProviderMainDetail from './components/ProviderList/ProviderMain'
 import MyBookingsPage from "./components/MyBookings/BookingMain";
+import handleNotification from "./components/api/Notification/handleNotification";
 function App() {
   
   return (
@@ -76,12 +77,18 @@ function App() {
 function AuthenticatedApp() {
   const { getUserRole, user } = useContext(AuthContext);
   const [role, setRole] = useState("");
-
+  const [notification,setNotifications] = useState([])
+  const userid = user?.id
   useEffect(() => {
     if (user?.id) {
       getUserRole(user.id, setRole);
     }
   }, [user]);
+
+  // useEffect(()=>{
+  //   handleNotification(userid)
+  // })
+  // console.log(notification)
 
   return (
     <>
