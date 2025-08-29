@@ -8,19 +8,21 @@ import Main from "./components/Mainpage/Main";
 import ProviderMain from "./components/ProviderDetails/ProviderMain";
 import Details from "./components/Authentication/Resetpassword/Details";
 import Resetpassword from "./components/Authentication/Resetpassword/Resetpassword";
-import MainDashboard from "./components/Dashboard/MainDashboard"
+import MainDashboard from "./components/Dashboard/MainDashboard";
 import ServicesMain from "./components/Services/ServicesMain";
 import Navigation from "./components/Mainpage/Navbar/Navigation";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import Profilemain from "./components/profile/Profilemain";
 import EditProfile from "./components/profile/editProfile/EditProfile";
-import ProviderMainDetail from './components/ProviderList/ProviderMain'
+import ProviderMainDetail from "./components/ProviderList/ProviderMain";
 import MyBookingsPage from "./components/MyBookings/BookingMain";
 import handleNotification from "./components/api/Notification/handleNotification";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
-  
   return (
     <AuthProvider>
       <Router>
@@ -73,23 +75,50 @@ function App() {
     </AuthProvider>
   );
 }
- {/* Private Routes */}
+
+{
+  /* Private Routes */
+}
 function AuthenticatedApp() {
   const { getUserRole, user } = useContext(AuthContext);
   const [role, setRole] = useState("");
-  const [notification,setNotifications] = useState([])
-  const userid = user?.id
+  const [notifications, setNotifications] = useState([]);
+  const userid = user?.id;
+
   useEffect(() => {
     if (user?.id) {
       getUserRole(user.id, setRole);
     }
   }, [user]);
 
-  // useEffect(()=>{
-  //   handleNotification(userid)
-  // })
-  // console.log(notification)
+  useEffect(() => {
+    if (!userid) return;
 
+    const socket = handleNotification(userid, ({ message, sender }) => {
+      console.log(message, sender);
+      toast.info(
+        <div>
+          <strong>{sender || "Someone"}</strong> booked you at{" "}
+          {message.location}
+          <div className="text-sm opacity-90">{message.notes}</div>
+        </div>,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+
+      setNotifications((prevNotifications) => [
+        ...prevNotifications,
+        { message, sender },
+      ]);
+    });
+    return () => socket && socket.close();
+  }, [notifications]);
   return (
     <>
       <Navigation role={role} />
@@ -101,12 +130,12 @@ function AuthenticatedApp() {
         <Route path="/profile" element={<Profilemain />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/booking/:id" element={<ProviderMainDetail />} />
-        <Route path="mybooking" element={<MyBookingsPage />}/>
-        <Route path="/becomeapro" element={<ProviderMain />}/>
+        <Route path="mybooking" element={<MyBookingsPage />} />
+        <Route path="/becomeapro" element={<ProviderMain />} />
       </Routes>
+      <ToastContainer />
     </>
   );
 }
-
 
 export default App;

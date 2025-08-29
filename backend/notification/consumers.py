@@ -1,36 +1,38 @@
-from channels.db import database_sync_to_async
-from .models import Notification
-from .serializers import NotificationSerializer
-import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+import json
 
-class NotificationsConsumer(AsyncWebsocketConsumer):
+class NotificationConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
-        self.user_id = str(self.scope["url_route"]["kwargs"]["user_id"])
-        self.room_group_name = f"notifications_{self.user_id}"
-
-        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        id = self.scope['url_route']['kwargs']['user_id']
+        self.id = id 
+        self.room_group_name = f'notification-{id}'
+        await self.channel_layer.group_add(self.room_group_name,self.channel_name)
         await self.accept()
 
-        # Send existing unread notifications
-        notifications = await self.get_unread_notifications()
-        for n in notifications:
-            await self.send(text_data=json.dumps(n))
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
 
-    @database_sync_to_async
-    def get_unread_notifications(self):
-        notifications = Notification.objects.filter(recipient_id=self.user_id, is_read=False).order_by("-created_at")
-        serializer = NotificationSerializer(notifications, many=True)
-        return serializer.data
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json.get('message', '')
+        sender = text_data_json.get('sender')
 
-    @database_sync_to_async
-    def get_notification_by_id(self, notification_id):
-        notification = Notification.objects.get(id=notification_id)
-        serializer = NotificationSerializer(notification)
-        return serializer.data
-
-    async def send_notification(self, event):
-        notification_id = event.get("notification_id")
-        if notification_id:
-            data = await self.get_notification_by_id(notification_id)
-            await self.send(text_data=json.dumps(data))
+        print("Received:", message, "from:", sender)
+        await self.channel_layer.group_send(self.room_group_name,{
+            'type':'notification',
+            'message':message,
+            'sender':sender,
+        })
+        
+    
+    async def notification(self,event):
+        message = event['message']
+        sender = event['sender']
+        await self.send(text_data=json.dumps({
+            'message':message,
+            'sender':sender,
+        }))

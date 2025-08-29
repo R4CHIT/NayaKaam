@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import bookaServiceApi from "../../api/Booking/bookaServiceApi";
 import swal from "sweetalert";
 import InputDetailsState from "../../ui/InputDetailsState";
+import handleNotification from "../../api/Notification/handleNotification";
+import AuthContext from "../../../context/AuthContext";
 
-const BookingModal = ({ setShowModal, provider, setStatus }) => {
+const BookingModal = ({ setShowModal, provider, setStatus, user_id }) => {
   const [note, setNote] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [service, setService] = useState("");
   const [loading, setLoading] = useState(false);
+  const [notification, setNotifications] = useState([]);
+  const { user } = useContext(AuthContext);
+  const username = user.username;
 
   const handleBook = async () => {
     if (!date || !time) {
@@ -24,18 +29,19 @@ const BookingModal = ({ setShowModal, provider, setStatus }) => {
       swal("Oops!", "Booking time cannot be in the past.", "warning");
       return;
     }
-    
+
     const data = {
       notes: note,
       provider: provider,
       booking_time: bookingTime.toISOString(),
       location: location,
-      service:service
+      service: service,
     };
 
     setLoading(true);
     try {
       await bookaServiceApi(data);
+      await handleNotification(user_id, setNotifications, data, username);
       swal({
         title: "Success!",
         text: "Your booking has been confirmed 💖",

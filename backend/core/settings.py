@@ -28,8 +28,7 @@ SECRET_KEY = 'django-insecure-v4sb1#955d*9ntu7cb+hm+%&^g#2*xoh#nx25pz_ez=k*_hlxn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -51,8 +50,6 @@ INSTALLED_APPS = [
     'category',
     'booking',
     'django_filters',
-    'notification'
-
 ]
 
 MIDDLEWARE = [

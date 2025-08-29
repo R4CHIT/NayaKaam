@@ -1,28 +1,36 @@
+const handleNotification = (user_id, setNotifications, data, username) => {
+  if (!user_id || typeof setNotifications !== "function") return;
 
-import { useEffect, useState } from "react";
+  const socket = new WebSocket(
+    `ws://localhost:8000/ws/notification/${user_id}/`
+  );
 
-const useNotifications = (userId) => {
-  const [notifications, setNotifications] = useState([]);
+  socket.onopen = () => {
+    if (data != null || username != null) {
+      if (location.pathname !== "/") {
+        socket.send(
+          JSON.stringify({
+            message: data,
+            sender: username,
+          })
+        );
+      }
+    }
+  };
 
-  useEffect(() => {
-    console.log(userId)
-    if (!userId) return;
-    const socket = new WebSocket(`ws://localhost:8000/ws/notifications/${userId}/`);
+  socket.onmessage = (e) => {
+    try {
+      const data = JSON.parse(e.data);
 
-    socket.onopen = () => console.log("WS connected ✅");
+      setNotifications(data);
+    } catch (err) {
+      console.error("Invalid websocket message:", e.data);
+    }
+  };
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setNotifications(prev => [data, ...prev]);
-    };
+  socket.onclose = () => console.log("WebSocket closed");
 
-    socket.onclose = () => console.log("WS disconnected ❌");
-    socket.onerror = (err) => console.error("WS error:", err);
-
-    return () => socket.close();
-  }, [userId]);
-
-  return notifications;
+  return socket;
 };
 
-export default useNotifications;
+export default handleNotification;
