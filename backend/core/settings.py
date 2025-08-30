@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'category',
     'booking',
     'django_filters',
+    'notification'
 ]
 
 MIDDLEWARE = [

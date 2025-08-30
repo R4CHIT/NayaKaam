@@ -84,6 +84,7 @@ function AuthenticatedApp() {
   const [role, setRole] = useState("");
   const [notifications, setNotifications] = useState([]);
   const userid = user?.id;
+  const [notificationstatus,setNotificationStatus] = useState(false)
 
   useEffect(() => {
     if (user?.id) {
@@ -96,6 +97,7 @@ function AuthenticatedApp() {
 
     const socket = handleNotification(userid, ({ message, sender }) => {
       console.log(message, sender);
+      setNotificationStatus(true)
       toast.info(
         <div>
           <strong>{sender || "Someone"}</strong> booked you at{" "}
@@ -117,11 +119,10 @@ function AuthenticatedApp() {
         { message, sender },
       ]);
     });
-    return () => socket && socket.close();
   }, [notifications]);
   return (
     <>
-      <Navigation role={role} />
+      <Navigation role={role} notificationstatus={notificationstatus} setNotificationStatus={setNotificationStatus}/>
       <Routes>
         <Route path="/" element={<Main role={role} />} />
         <Route path="/providerauth" element={<ProviderMain />} />

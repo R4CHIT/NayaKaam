@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 from userprofile.views import *
 from category.views import *
 from booking.views import *
+from notification.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -68,7 +69,10 @@ urlpatterns = [
     path("api/getMonthlyEarning", GetMontlyEarning.as_view(), name=""),
 
     #GetMonthlyBooking
-    path("api/getMonthlyBooking", GetMonthlyBooking.as_view(), name=""),
+    path("api/getMonthlyBooking/", GetMonthlyBooking.as_view(), name=""),
+
+    #notification
+    path("api/getnotification/", GetNotifications.as_view(), name="")
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

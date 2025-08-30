@@ -1,15 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
 import ProviderMain from "../../ProviderDetails/ProviderMain";
-import { FiBell } from "react-icons/fi"; // Notification Icon
+import { FiBell } from "react-icons/fi";
 import NotificationMain from "../../notification/NotificationMain";
+import getNotification from "../../api/Notification/getNotification";
 
-const Navigation = ({ role }) => {
+const Navigation = ({ role,notificationstatus ,setNotificationStatus}) => {
   const navigate = useNavigate();
   const { Logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
+  const [notifications,setNotifications] = useState([])
+
+  const handleClick=async()=>{
+    await getNotification(setNotifications)
+    
+  }
 
   return (
     <div className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 fixed h-20 w-[100vw] flex justify-between items-center px-4 sm:px-8 lg:px-20 shadow-md z-50">
@@ -54,8 +61,9 @@ const Navigation = ({ role }) => {
       )}
 
       
-      <button className="hidden md:block text-white text-2xl hover:text-yellow-300 transition-colors" onClick={()=>setShow((prev)=>!prev)}>
+      <button className="hidden md:flex text-white text-2xl hover:text-yellow-300 transition-colors" onClick={()=>{setShow((prev)=>!prev);handleClick()}}>
         <FiBell />
+        {notificationstatus && <span className="absolute h-2 w-2 z-10 bg-red-500 rounded-[50%] ml-3.5 mb-0.5"></span>}
       </button>
 
       
@@ -103,7 +111,7 @@ const Navigation = ({ role }) => {
         </div>
       )}
 
-      {show && <NotificationMain setShow={setShow} />}
+      {show && <NotificationMain setShow={setShow} notifications={notifications} setNotificationStatus={setNotificationStatus}/>}
     </div>
   );
 };

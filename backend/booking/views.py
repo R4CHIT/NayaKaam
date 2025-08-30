@@ -11,20 +11,28 @@ from django.db.models import Sum,Count
 import calendar
 from userprofile.models import ProviderDetails
 from .pagination import *
-
+from notification.models import Notification
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
 class MakeBooking(generics.CreateAPIView):
     serializer_class = BookingSerializers
     permission_classes = [IsAuthenticated]
-    
-
     def perform_create(self, serializer):
         customer = self.request.user
-        provider_id = self.request.data.get('provider') 
+        provider_id = self.request.data.get('provider')
         price = ProviderDetails.objects.get(user=provider_id)
         serializer.save(customer=customer,price=price.price)
+        provider_user = get_object_or_404(User, id=1)
+
+        Notification.objects.create(
+            sender=customer,
+            receiver=provider_user,  
+            message="Booking Created",
+            booking_time=self.request.data.get('booking_time'),
+            location = self.request.data.get('location')
+        )
         return super().perform_create(serializer)
 
 

@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import bookaServiceApi from "../../api/Booking/bookaServiceApi";
 import swal from "sweetalert";
 import InputDetailsState from "../../ui/InputDetailsState";
-import handleNotification from "../../api/Notification/handleNotification";
 import AuthContext from "../../../context/AuthContext";
+import sendNotifiaction from "../../api/Notification/sendNotifiaction";
 
 const BookingModal = ({ setShowModal, provider, setStatus, user_id }) => {
   const [note, setNote] = useState("");
@@ -12,7 +12,6 @@ const BookingModal = ({ setShowModal, provider, setStatus, user_id }) => {
   const [location, setLocation] = useState("");
   const [service, setService] = useState("");
   const [loading, setLoading] = useState(false);
-  const [notification, setNotifications] = useState([]);
   const { user } = useContext(AuthContext);
   const username = user.username;
 
@@ -41,7 +40,7 @@ const BookingModal = ({ setShowModal, provider, setStatus, user_id }) => {
     setLoading(true);
     try {
       await bookaServiceApi(data);
-      await handleNotification(user_id, setNotifications, data, username);
+      await sendNotifiaction(user_id,data,username);
       swal({
         title: "Success!",
         text: "Your booking has been confirmed 💖",

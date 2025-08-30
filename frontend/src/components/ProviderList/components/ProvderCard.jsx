@@ -28,7 +28,7 @@ const ProvderCard = ({ provider }) => {
     <div className="bg-white shadow-md rounded-2xl p-5 flex flex-col text-left hover:shadow-xl transition duration-300">
       <div className="flex items-center gap-4">
         <img
-          src={`http://127.0.0.1:8000/${provider.profilepic}`}
+          src={`http://127.0.0.1:8000${provider.profilepic}`}
           alt={provider.fullname}
           className="w-16 h-16 rounded-full object-cover"
         />
@@ -64,7 +64,7 @@ const ProvderCard = ({ provider }) => {
             ? "bg-blue-600 hover:bg-blue-700"
             : "bg-blue-900 cursor-not-allowed"
         }`}
-        disabled={!show || status}
+        disabled={status}
         onClick={() => handleBooking(provider.userId)}
       >
         {!status ? "Book Now" : "Booked"}
