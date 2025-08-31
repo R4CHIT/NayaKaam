@@ -5,22 +5,25 @@ import ProviderMain from "../../ProviderDetails/ProviderMain";
 import { FiBell } from "react-icons/fi";
 import NotificationMain from "../../notification/NotificationMain";
 import getNotification from "../../api/Notification/getNotification";
+import getUnreadNotification from "../../api/Notification/getUnreadNotification";
 
-const Navigation = ({ role,notificationstatus ,setNotificationStatus}) => {
+const Navigation = ({ role, notificationstatus, setNotificationStatus }) => {
   const navigate = useNavigate();
-  const { Logout } = useContext(AuthContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const [notifications,setNotifications] = useState([])
+  const [notifications, setNotifications] = useState([]);
+  const [api, setApi] = useState("api/getnotification");
+  const [unread, setUnread] = useState(0);
 
-  const handleClick=async()=>{
-    await getNotification(setNotifications)
-    
-  }
-
+  useEffect(() => {
+    getNotification(setNotifications, api);
+  }, [api,notificationstatus]);
+  useEffect(() => {
+    getUnreadNotification(setUnread);
+  }, [notificationstatus]);
   return (
     <div className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 fixed h-20 w-[100vw] flex justify-between items-center px-4 sm:px-8 lg:px-20 shadow-md z-50">
-      
       <div
         className="text-white font-bold text-2xl sm:text-3xl cursor-pointer"
         onClick={() => navigate("/")}
@@ -60,13 +63,19 @@ const Navigation = ({ role,notificationstatus ,setNotificationStatus}) => {
         </div>
       )}
 
-      
-      <button className="hidden md:flex text-white text-2xl hover:text-yellow-300 transition-colors" onClick={()=>{setShow((prev)=>!prev);handleClick()}}>
-        <FiBell />
-        {notificationstatus && <span className="absolute h-2 w-2 z-10 bg-red-500 rounded-[50%] ml-3.5 mb-0.5"></span>}
+      <button
+        className="relative hidden md:flex text-white text-2xl hover:text-yellow-300 transition-colors"
+        onClick={() => setShow((prev) => !prev)}
+      >
+        <FiBell className="text-3xl" />
+
+        {unread > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+            {unread}
+          </span>
+        )}
       </button>
 
-      
       <button
         className="md:hidden text-white p-2"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -76,7 +85,6 @@ const Navigation = ({ role,notificationstatus ,setNotificationStatus}) => {
         <div className="w-6 h-0.5 bg-white"></div>
       </button>
 
-      
       {isMenuOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full bg-gradient-to-r from-blue-500 via-blue-500 to-blue-400 shadow-md">
           <div className="flex flex-col p-4 space-y-4">
@@ -111,7 +119,16 @@ const Navigation = ({ role,notificationstatus ,setNotificationStatus}) => {
         </div>
       )}
 
-      {show && <NotificationMain setShow={setShow} notifications={notifications} setNotificationStatus={setNotificationStatus}/>}
+      {show && (
+        <NotificationMain
+          setShow={setShow}
+          notifications={notifications}
+
+          setNotificationStatus={setNotificationStatus}
+          setApi={setApi}
+          setUnread={setUnread}
+        />
+      )}
     </div>
   );
 };

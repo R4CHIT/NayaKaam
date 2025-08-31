@@ -93,33 +93,32 @@ function AuthenticatedApp() {
   }, [user]);
 
   useEffect(() => {
-    if (!userid) return;
+  if (!userid) return;
 
-    const socket = handleNotification(userid, ({ message, sender }) => {
-      console.log(message, sender);
-      setNotificationStatus(true)
-      toast.info(
-        <div>
-          <strong>{sender || "Someone"}</strong> booked you at{" "}
-          {message.location}
-          <div className="text-sm opacity-90">{message.notes}</div>
-        </div>,
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        }
-      );
+  const socket = handleNotification(userid, ({ message, sender }) => {
+    setNotificationStatus(true);
 
-      setNotifications((prevNotifications) => [
-        ...prevNotifications,
-        { message, sender },
-      ]);
-    });
-  }, [notifications]);
+    toast.info(
+      <div>
+        <strong>{sender || "Someone"}</strong> booked you at{" "}
+        {message.location}
+        <div className="text-sm opacity-90">{message.notes}</div>
+      </div>,
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      }
+    );
+  });
+
+  // cleanup socket on unmount
+  return () => socket.close();
+}, [userid]);
+
   return (
     <>
       <Navigation role={role} notificationstatus={notificationstatus} setNotificationStatus={setNotificationStatus}/>

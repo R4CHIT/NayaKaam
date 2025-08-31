@@ -1,14 +1,13 @@
 import axios from '../../../axios'
 
-const getNotification = async(setNotifications) => {
+const getNotification = async(setNotifications,api) => {
   try {
-    const res =await axios.get('api/getnotification',{
+    const res =await axios.get(api,{
     headers:{
         Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
     }
     
   })
-  console.log(res.data)
   if(res.status == 200){
     setNotifications(res.data)
   }

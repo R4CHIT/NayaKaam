@@ -72,7 +72,10 @@ urlpatterns = [
     path("api/getMonthlyBooking/", GetMonthlyBooking.as_view(), name=""),
 
     #notification
-    path("api/getnotification/", GetNotifications.as_view(), name="")
+    path("api/getnotification/", GetNotifications.as_view(), name=""),
+    path("api/getunreadnotification", GetUnreadNotification.as_view(), name=""),
+    path("api/readallnotification", ReadAllNotification.as_view(), name=""),
+    path("api/readnotification/<int:pk>/", ReadNotification.as_view(), name=""),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
