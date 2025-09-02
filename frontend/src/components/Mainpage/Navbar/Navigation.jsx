@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../../context/AuthContext";
-import ProviderMain from "../../ProviderDetails/ProviderMain";
+
 import { FiBell } from "react-icons/fi";
 import NotificationMain from "../../notification/NotificationMain";
 import getNotification from "../../api/Notification/getNotification";

@@ -13,7 +13,7 @@ from userprofile.models import ProviderDetails
 from .pagination import *
 from notification.models import Notification
 from django.shortcuts import get_object_or_404
-
+import time
 # Create your views here.
 
 class MakeBooking(generics.CreateAPIView):
@@ -91,3 +91,14 @@ class GetMonthlyBooking(generics.GenericAPIView):
             for item in booking
         ]
         return Response(data)
+    
+class UpdateOrderStatus(generics.UpdateAPIView):
+    permission_classes=[IsAuthenticated]
+    def patch(self, request,pk):
+        status = request.data.get("status")
+        booking=Booking.objects.filter(id=pk).update(status=status)
+
+        if booking:
+            return Response({"message": "Booking status updated!"}, status=200)
+        else:
+            return Response({"error": "Booking not found"}, status=404)

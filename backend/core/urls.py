@@ -76,6 +76,7 @@ urlpatterns = [
     path("api/getunreadnotification", GetUnreadNotification.as_view(), name=""),
     path("api/readallnotification", ReadAllNotification.as_view(), name=""),
     path("api/readnotification/<int:pk>/", ReadNotification.as_view(), name=""),
+    path("api/updatestatus/<int:pk>/", UpdateOrderStatus.as_view(), name="")
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
