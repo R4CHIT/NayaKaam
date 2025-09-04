@@ -5,11 +5,9 @@ import AuthContext  from "../context/AuthContext";
 const Userroute = ({ children }) => {
   const {user} = useContext(AuthContext);
 
-  if (user){
+  if (localStorage.getItem("accesstoken") && user) {
     return <Navigate to="/" />;
-  }
-  // If the user is not authenticated, render the the login/register page
-  
+  }  
   return children;
   
 }

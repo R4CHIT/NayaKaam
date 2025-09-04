@@ -33,7 +33,7 @@ export default function PrivateRoutes() {
 
       toast.info(
         <div>
-          <strong>{sender || "Someone"}</strong> booked you at {message.location}
+          <strong>{sender || "Someone"}</strong>{message.status} {message.location}
           <div className="text-sm opacity-90">{message.notes}</div>
         </div>,
         {

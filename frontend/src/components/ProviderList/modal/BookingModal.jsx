@@ -34,6 +34,7 @@ const BookingModal = ({ setShowModal, provider, setStatus, user_id }) => {
       provider: provider,
       booking_time: bookingTime.toISOString(),
       location: location,
+      status:" Booked you at",
       service: service,
     };
 

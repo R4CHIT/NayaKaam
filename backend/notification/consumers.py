@@ -36,4 +36,3 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'message':message,
             'sender':sender,
         }))
-        
