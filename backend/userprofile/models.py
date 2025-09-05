@@ -20,6 +20,7 @@ class ProviderDetails(models.Model):
     description = models.CharField(max_length=200)
     jobtype = models.ManyToManyField(Category)
     joineddate = models.DateTimeField(auto_now_add=True)
-
+    rating = models.PositiveIntegerField(default=0)
+    rating_count = models.PositiveIntegerField(default=0)
     def __str__(self):
         return f"{self.fullname} "

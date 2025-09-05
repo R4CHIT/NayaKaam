@@ -57,6 +57,7 @@ urlpatterns = [
     
     #profile update
     path('api/updateprofile/<int:userId>/', UpdateApiView.as_view(), name="UpdateProfile"),
+    path("api/updateproviderrating/<int:pk>/", UpdateProviderRating.as_view(), name="Updaterating"),
     
     #Booking
     path('api/booking/',MakeBooking.as_view()),

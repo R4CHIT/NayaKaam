@@ -57,3 +57,24 @@ class GetProviderThroughCategory(generics.RetrieveAPIView):
         serializers = ProviderDetailCategorySerializers(profile,many=True)
     
         return Response(serializers.data)
+
+class UpdateProviderRating(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    def patch(self, request, pk):
+        provider = ProviderDetails.objects.get(user=pk)
+        new_rating = int(request.data.get("rating", 0))
+        if not provider.rating:
+            provider.rating = new_rating
+            provider.rating_count = 1
+        else:
+            total_score = provider.rating * provider.rating_count
+            total_score += new_rating
+            provider.rating_count += 1
+            provider.rating = total_score / provider.rating_count
+
+        provider.save()
+
+        return Response({
+            "average_rating": round(provider.rating, 1),
+            "rating_count": provider.rating_count
+        })
