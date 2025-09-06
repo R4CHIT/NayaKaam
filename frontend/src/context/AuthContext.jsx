@@ -1,77 +1,75 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "../axios";
 
-
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-useEffect(() => {
-  const checkAuth = async () => {
-    const token = localStorage.getItem("accesstoken");
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      try {
-        const res = await axios.get("/api/auth/user/");
-        setUser(res.data);        
-      } catch (err) {
-        Logout();
-      }
-    }
-    setLoading(false);
-  };
+  const [role, setRole] = useState(null);
 
-  checkAuth();
-}, []);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("accesstoken");
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        try {
+          const res = await axios.get("/api/auth/user/");
+          setUser(res.data);
+        } catch (err) {
+          Logout();
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
 
   const Login = async (credentials) => {
-  try {
-    if (credentials.username === "" || credentials.password === "") {
-      setError({ message: "Please fill in all fields" });
-      return;
-    }
-
-    const response = await axios.post("/api/auth/login/", credentials);
-    const { access, refresh } = response.data;
-
-    localStorage.setItem("accesstoken", access);
-    localStorage.setItem("refreshtoken", refresh);
-    axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-
-    setUser(credentials.username);
-    setError(null);
-    window.location.href = '/'
-  } catch (err) {
-    setError({ message: "Invalid credentials" });
-  } finally {
-    setLoading(false);
-  }
-};
-
-  
-const register = async (credentials,navigate) => {
     try {
-      if (credentials.username === "" || credentials.password === "" || credentials.email === "") {
-      setError({ message: "Please fill in all fields" });
-      return;
+      if (credentials.username === "" || credentials.password === "") {
+        setError({ message: "Please fill in all fields" });
+        return;
+      }
+
+      const response = await axios.post("/api/auth/login/", credentials);
+      const { access, refresh } = response.data;
+
+      localStorage.setItem("accesstoken", access);
+      localStorage.setItem("refreshtoken", refresh);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+      setUser(credentials.username);
+      setError(null);
+      window.location.href = "/";
+    } catch (err) {
+      setError({ message: "Invalid credentials" });
+    } finally {
+      setLoading(false);
     }
-      const response = await axios.post(
-        "/api/auth/register/",
-        credentials,
-      );
+  };
+
+  const register = async (credentials, navigate) => {
+    try {
+      if (
+        credentials.username === "" ||
+        credentials.password === "" ||
+        credentials.email === ""
+      ) {
+        setError({ message: "Please fill in all fields" });
+        return;
+      }
+      const response = await axios.post("/api/auth/register/", credentials);
       navigate("/login");
-      setError({message:"Register Succesfull"})
+      setError({ message: "Register Succesfull" });
     } catch (error) {
       setError({ message: "Invalid credentials" });
     } finally {
       setLoading(false);
-      
     }
   };
-  
 
   const Logout = () => {
     localStorage.removeItem("accesstoken");
@@ -80,16 +78,23 @@ const register = async (credentials,navigate) => {
     delete axios.defaults.headers.common["Authorization"];
   };
 
-  
-
-  const getUserRole = async(userId,setRole) => {
-  const response = await axios.get(`api/getRole/${userId}/`)
-  if(response.status == 200){
-    setRole(response.data.role)
-  }
-}
+  useEffect(() => {
+    const getUserRole = async () => {
+      const response = await axios.get(`api/getRole/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
+      });
+      if (response.status == 200) {
+        setRole(response.data.role);
+      }
+    };
+    getUserRole();
+  }, []);
   return (
-    <AuthContext.Provider value={{ user,loading, Login, Logout , register,error,getUserRole}}>
+    <AuthContext.Provider
+      value={{ user, loading, Login, Logout, register, error, role }}
+    >
       {children}
     </AuthContext.Provider>
   );

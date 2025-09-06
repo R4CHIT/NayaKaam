@@ -132,8 +132,9 @@ class Changeresetpassword(generics.CreateAPIView):
     
 class GetUserRole(generics.RetrieveAPIView):
     permission_classes = [Isauthenticated]
-    def get(self, request, userId):
+    def get(self, request):
         try:
+            userId = request.user
             role = UserRole.objects.get(user=userId)
             serializer = GetUserRoleSerializer(role)
             return Response(serializer.data)

@@ -20,7 +20,7 @@ const BookingSummary = ({summary}) => {
         </div>
         <div className="bg-white rounded-2xl shadow-md p-6 text-center">
           <h3 className="text-gray-500">Cancelled</h3>
-          <p className="text-2xl font-bold text-red-500">{summary.confirmed}</p>
+          <p className="text-2xl font-bold text-red-500">{summary.cancelled}</p>
         </div>
       </div>
     </>

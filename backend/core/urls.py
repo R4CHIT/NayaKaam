@@ -53,7 +53,7 @@ urlpatterns = [
     path('api/getcategoryDetails/',Get_AllCtegory.as_view(),name="GetCategory"),
 
     #Provider roles
-    path('api/getRole/<int:userId>/',GetUserRole.as_view(),name="GetRole"),
+    path('api/getRole/',GetUserRole.as_view(),name="GetRole"),
     
     #profile update
     path('api/updateprofile/<int:userId>/', UpdateApiView.as_view(), name="UpdateProfile"),

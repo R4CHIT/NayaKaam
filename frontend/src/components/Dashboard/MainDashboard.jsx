@@ -1,12 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import UserDashboard from './User/UserDashboard'
 import Navigation from '../Mainpage/Navbar/Navigation'
+import AuthContext from '../../context/AuthContext'
+import CustomerDashboard from './customer/CustomerDashboard'
 const MainDashboard = () => {
+  const {role} = useContext(AuthContext)
   
   return (
+    
     <>
       <div className='pt-20'>
-        <UserDashboard/>
+        {role==="provider" ? (
+          <UserDashboard/>
+        ):(
+          
+          <CustomerDashboard />
+        )}
+        
       </div>
     </>
   )

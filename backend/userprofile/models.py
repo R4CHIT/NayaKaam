@@ -23,4 +23,4 @@ class ProviderDetails(models.Model):
     rating = models.PositiveIntegerField(default=0)
     rating_count = models.PositiveIntegerField(default=0)
     def __str__(self):
-        return f"{self.fullname} "
+        return f"{self.fullname}"

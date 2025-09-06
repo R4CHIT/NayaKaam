@@ -14,6 +14,7 @@ from .pagination import *
 from notification.models import Notification
 from django.shortcuts import get_object_or_404
 import time
+from django.db.models import Q
 # Create your views here.
 
 class MakeBooking(generics.CreateAPIView):
@@ -49,7 +50,8 @@ class getBookingSummary(generics.GenericAPIView):
 
     def get(self,request):
         user=request.user
-        booking= Booking.objects.filter(provider = user)
+        booking= Booking.objects.filter(Q(provider = user)|Q(customer=user))
+    
         completed = booking.filter(status = "completed").count()
         pending = booking.filter(status = "pending").count()
         confirmed = booking.filter(status = "confirmed").count()
@@ -85,7 +87,7 @@ class GetMonthlyBooking(generics.GenericAPIView):
     permission_classes=[IsAuthenticated]
     def get(self,requst):
         user=requst.user
-        booking = Booking.objects.filter(provider=user).annotate(month=TruncMonth('booking_time')).values('month').annotate(count=Count('id')).order_by('month')
+        booking = Booking.objects.filter(Q(provider=user)|Q(customer=user)).annotate(month=TruncMonth('booking_time')).values('month').annotate(count=Count('id')).order_by('month')
         data= [
             {"month":item['month'].strftime("%B"),"booking":item['count']}
             for item in booking

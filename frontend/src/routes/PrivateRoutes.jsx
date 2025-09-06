@@ -9,25 +9,18 @@ import ServicesMain from "../components/Services/ServicesMain";
 import Profilemain from "../components/profile/Profilemain";
 import EditProfile from "../components/profile/editProfile/EditProfile";
 import ProviderMainDetail from "../components/ProviderList/ProviderMain";
-import MyBookingsPage from "../components/MyBookings/BookingMain";
 import handleNotification from "../components/api/Notification/handleNotification";
 import { toast, ToastContainer } from "react-toastify";
 import UserRatingModal from "../components/ui/modals/UserRatingModal";
 
 export default function PrivateRoutes() {
-  const { getUserRole, user } = useContext(AuthContext);
-  const [role, setRole] = useState("");
+  const { role, user } = useContext(AuthContext);
   const userid = user?.id;
   const [notificationstatus, setNotificationStatus] = useState(false);
 
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(null);
   const [providerid,setProviderid]=useState(null)
-
-  useEffect(() => {
-    if (user?.id) getUserRole(user.id, setRole);
-  }, [user]);
-
   useEffect(() => {
     if (!userid) return;
 
@@ -68,7 +61,7 @@ export default function PrivateRoutes() {
         <Route path="/profile" element={<Profilemain />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/booking/:id" element={<ProviderMainDetail />} />
-        <Route path="mybooking" element={<MyBookingsPage />} />
+        
         <Route path="/becomeapro" element={<ProviderMain />} />
       </Routes>
 
