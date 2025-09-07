@@ -9,8 +9,6 @@ import Setting from "../Common/Setting";
 const UserDashboard = () => {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  
-
   return (
     <div className="flex">
       

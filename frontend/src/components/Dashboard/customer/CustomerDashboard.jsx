@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import SideBar from "../User/SideBar";
 import HomePage from "../User/HomePage";
+import Homepage from "./components/Homepage";
+import Bookinggrid from "../User/Smallcomponents/Bookinggrid";
+import Bookings from "./components/Bookings";
+import Setting from "../Common/Setting";
 
 const CustomerDashboard = () => {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   
-
   return (
     <div className="flex">
       
@@ -29,7 +32,9 @@ const CustomerDashboard = () => {
 
       
       <div className="flex-1 px-6 py-10 bg-gray-50 text-gray-800 min-h-screen md:ml-64">
-        {active === 0 && <HomePage />}
+        {active === 0 && <Homepage />}
+        {active === 1 && <Bookings />}
+        {active === 3 && <Setting />}
       </div>
     </div>
   );

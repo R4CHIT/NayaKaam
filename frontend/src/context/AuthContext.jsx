@@ -76,21 +76,24 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("refreshtoken");
     setUser(null);
     delete axios.defaults.headers.common["Authorization"];
+    window.location.href = "/login";
   };
 
-  useEffect(() => {
-    const getUserRole = async () => {
-      const response = await axios.get(`api/getRole/`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
-        },
-      });
-      if (response.status == 200) {
-        setRole(response.data.role);
-      }
-    };
-    getUserRole();
-  }, []);
+  if (localStorage.getItem("accesstoken")) {
+    useEffect(() => {
+      const getUserRole = async () => {
+        const response = await axios.get(`api/getRole/`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+          },
+        });
+        if (response.status == 200) {
+          setRole(response.data.role);
+        }
+      };
+      getUserRole();
+    }, []);
+  }
   return (
     <AuthContext.Provider
       value={{ user, loading, Login, Logout, register, error, role }}

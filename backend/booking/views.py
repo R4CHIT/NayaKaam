@@ -43,7 +43,7 @@ class GetBooking(generics.ListAPIView):
     pagination_class = CustomPagination
     
     def get_queryset(self):
-        return Booking.objects.filter(provider=self.request.user).order_by('-id')
+        return Booking.objects.filter(Q(provider=self.request.user)|Q(customer=self.request.user)).order_by('-id')
     
 class getBookingSummary(generics.GenericAPIView):
     permission_classes=[IsAuthenticated]

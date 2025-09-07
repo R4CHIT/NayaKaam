@@ -4,6 +4,7 @@ import PrivateRoutes from "./routes/PrivateRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoute from "./middleware/Privateroute";
 import { useContext } from "react";
+import Userroute from "./middleware/Userroute";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -21,7 +22,7 @@ function App() {
             }
           />
         ):(
-           <Route path="/*" element={<PublicRoutes />} />
+           <Route path="/*" element={<Userroute><PublicRoutes /></Userroute>} />
         )}
     
         </Routes>
