@@ -62,6 +62,7 @@ urlpatterns = [
     #Booking
     path('api/booking/',MakeBooking.as_view()),
     path('api/getbooking/',GetBooking.as_view()),
+    path("api/getcompletedbooking", getCompletedBooking.as_view(), name="history"),
 
     #booking Summary
     path("api/getBookingSummary", getBookingSummary.as_view(), name=""),

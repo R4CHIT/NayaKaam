@@ -104,3 +104,12 @@ class UpdateOrderStatus(generics.UpdateAPIView):
             return Response({"message": "Booking status updated!"}, status=200)
         else:
             return Response({"error": "Booking not found"}, status=404)
+        
+class getCompletedBooking(generics.ListAPIView):
+    permission_classes=[IsAuthenticated]
+    serializer_class = BookingSerializers
+    pagination_class = CustomPagination
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Booking.objects.filter(Q(provider=user)|Q(customer=user),status='completed')
