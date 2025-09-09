@@ -15,7 +15,7 @@ const EditUserInput = ({
     if (type === "file") {
       setProfile({
         ...provider,
-        [name]: e.target.files[0], // ✅ store the File object
+        [name]: e.target.files[0], 
       });
     } else {
       setProfile({

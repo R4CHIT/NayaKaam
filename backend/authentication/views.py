@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer , ChangePassword,PasswordReset,ChangeresetPassword,GetUserRoleSerializer
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer , ChangePassword,PasswordReset,ChangeresetPassword
 from .permissions import HasRole
 from rest_framework.permissions import IsAuthenticated as Isauthenticated
 from django.contrib.auth import authenticate, get_user_model
@@ -95,7 +95,7 @@ class SendResetEmail(generics.GenericAPIView):
             user = User.objects.get(email=email)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = PasswordResetTokenGenerator().make_token(user)
-            reset_url = f"http://localhost:5173/reset-password/{uid}/{token}"
+            reset_url = f"http://localhost:5173/auth/reset-password/{uid}/{token}"
             send_mail(
                 "Reset Your Password",
                 f"Click this link to reset your password: {reset_url}",
@@ -135,10 +135,10 @@ class GetUserRole(generics.RetrieveAPIView):
     def get(self, request):
         try:
             userId = request.user
-            role = UserRole.objects.get(user=userId)
-            serializer = GetUserRoleSerializer(role)
-            return Response(serializer.data)
-        except UserRole.DoesNotExist:
+            role = User.objects.get(user=userId)
+            
+            return Response(role)
+        except role.DoesNotExist:
             return Response({"error": "Role not found"}, status=404)
         
 

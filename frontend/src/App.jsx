@@ -1,30 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AuthContext, { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
-import PrivateRoute from "./middleware/Privateroute";
-import { useContext } from "react";
-import Userroute from "./middleware/Userroute";
+import Privateroute from "./middleware/Privateroute";
+import Userroute  from "./middleware/Userroute"; 
 
 function App() {
-  const { user } = useContext(AuthContext);
   return (
     <AuthProvider>
       <Router>
         <Routes>
-        {user ?(
-          <Route
-            path="/*"
-            element={
-              <PrivateRoute>
-                <PrivateRoutes />
-              </PrivateRoute>
-            }
-          />
-        ):(
-           <Route path="/*" element={<Userroute><PublicRoutes /></Userroute>} />
-        )}
-    
+  
+          <Route path="/auth/*" element={<><PublicRoutes /></>} />
+          <Route path="/*" element={<><PrivateRoutes /></>} />
         </Routes>
       </Router>
     </AuthProvider>

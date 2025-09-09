@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-
 import { useNavigate, Link } from "react-router-dom";
 import InputDetails from "../ui/InputDetails";
 import { useRef } from "react";
@@ -14,17 +13,17 @@ function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  const { Login, error } = useContext(AuthContext);
+  const { login, error } = useContext(AuthContext);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     try {
+      e.preventDefault();
       setLoading(true);
       const credentials = {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
       };
-      e.preventDefault();
-      await Login(credentials, navigate);
+      await login(credentials, navigate);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -33,7 +32,10 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-6">
-      <form className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3" onSubmit={handleSubmit}>
+      <form
+        className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3"
+        onSubmit={handleSubmit}
+      >
         <h2 className="text-4xl font-bold text-center text-orange-500 ">
           Login
         </h2>
@@ -61,15 +63,21 @@ function Login() {
         <Button title={loading ? <LoadingEffect /> : "Login"} type={"submit"}>
           Login
         </Button>
-        
+
         <p className="text-center text-slate-700 text-sm">
-          <Link to="/reset" className="hover:underline hover:text-cyan-400">
+          <Link
+            to="/auth/reset"
+            className="hover:underline hover:text-cyan-400"
+          >
             forget password
           </Link>
         </p>
         <p className="text-center text-slate-700 text-sm">
           Don't have an account?{" "}
-          <Link to="/register" className="hover:underline hover:text-cyan-400">
+          <Link
+            to="/auth/register"
+            className="hover:underline hover:text-cyan-400"
+          >
             Register
           </Link>
         </p>

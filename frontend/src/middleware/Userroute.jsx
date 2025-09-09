@@ -1,14 +1,13 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import AuthContext  from "../context/AuthContext";
+import AuthContext from "../context/AuthContext";
 
 const Userroute = ({ children }) => {
-  const {user} = useContext(AuthContext);
-
-  if (localStorage.getItem("accesstoken") && user) {
-    return <Navigate to="/" />;
-  }  
+  const { user } = useContext(AuthContext);
+  if (user && localStorage.getItem("accesstoken")) {
+    return <Navigate to="/" replace />;
+  }
   return children;
-  
-}
+};
+
 export default Userroute;

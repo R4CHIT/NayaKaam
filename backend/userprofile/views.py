@@ -4,7 +4,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import ProviderDetails
 from rest_framework.response import Response
-from authentication.models import Role,UserRole
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from rest_framework.views import APIView
 # Create your views here.
 
@@ -14,8 +15,11 @@ class ProviderDetailView(generics.CreateAPIView):
     def perform_create(self, serializer):
         user = self.request.user
         serializer.save(user=self.request.user)
-        provider_role, _ = Role.objects.get_or_create(name="provider")
-        UserRole.objects.get_or_create(user=user, role=provider_role)
+        user=User.objects.get(username=user)
+        user.roles = 'provider'
+        user.save()
+        # provider_role, _ = User(name="provider")
+        # UserRole.objects.get_or_create(user=user, role=provider_role)
 
 class ProviderDetailGetView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]

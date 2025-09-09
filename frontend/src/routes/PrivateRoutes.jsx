@@ -14,27 +14,29 @@ import { toast, ToastContainer } from "react-toastify";
 import UserRatingModal from "../components/ui/modals/UserRatingModal";
 
 export default function PrivateRoutes() {
-  const { role, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const userid = user?.id;
+  const role = user?.roles;
   const [notificationstatus, setNotificationStatus] = useState(false);
 
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(null);
-  const [providerid,setProviderid]=useState(null)
+  const [providerid, setProviderid] = useState(null);
   useEffect(() => {
     if (!userid) return;
 
     const socket = handleNotification(userid, ({ message, sender }) => {
       setNotificationStatus(true);
-      console.log(message)
-      setProviderid(message.providerId)
+      console.log(message);
+      setProviderid(message.providerId);
       if (message.status === "completed") {
         setCurrentBooking({ ...message, sender });
         setShowRatingModal(true);
       } else {
         toast.info(
           <div>
-            <strong>{sender || "Someone"}</strong> {message.status} your booking at {message.location}.
+            <strong>{sender || "Someone"}</strong> {message.status} your booking
+            at {message.location}.
             <div className="text-sm opacity-90">{message.notes}</div>
           </div>,
           { position: "top-right" }
@@ -55,14 +57,18 @@ export default function PrivateRoutes() {
 
       <Routes>
         <Route path="/" element={<Main role={role} />} />
-        <Route path="/providerauth" element={<ProviderMain />} />
-        <Route path="/dashboard" element={<MainDashboard />} />
+        <Route path="providerauth" element={<ProviderMain />} />
+        <Route path="dashboard" element={<MainDashboard />} />
         <Route path="services" element={<ServicesMain />} />
-        <Route path="/profile" element={<Profilemain />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/booking/:id" element={<ProviderMainDetail />} />
-        
-        <Route path="/becomeapro" element={<ProviderMain />} />
+        <Route path="profile" element={<Profilemain />} />
+        <Route path="editprofile" element={<EditProfile />} />
+        <Route path="booking/:id" element={<ProviderMainDetail />} />
+        <Route
+          path="becomeapro"
+          element={
+            <ProviderMain />
+          }
+        />
       </Routes>
 
       <ToastContainer autoClose={2000} />

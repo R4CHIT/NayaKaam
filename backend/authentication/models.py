@@ -6,19 +6,12 @@ from django.conf import settings
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+    roles = models.CharField(max_length=200, blank=True, null=True,default='customer')
 
     def __str__(self):
         return self.username
-
-class Role(models.Model):
-    name = models.CharField(max_length=200, unique=True)
-
-    def __str__(self):
-        return self.name
-
-class UserRole(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_roles')  # ✅ Fix here
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('user', 'role')
+    def has_role(self, role_name):
+        if not self.roles:
+            return False
+        role_list = [r.strip().lower() for r in self.roles.split(",")]
+        return role_name.lower() in role_list
