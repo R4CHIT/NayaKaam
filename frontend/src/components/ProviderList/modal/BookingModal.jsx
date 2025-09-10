@@ -128,7 +128,7 @@ const BookingModal = ({ setShowModal, provider, setStatus, user_id }) => {
           <button
             type="button"
             className="px-5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-md transition"
-            onClick={handleBook}
+            onClick={()=>handleBook()}
             disabled={loading}
           >
             {loading ? "Booking..." : "Book Now"}

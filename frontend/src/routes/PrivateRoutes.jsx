@@ -12,7 +12,7 @@ import ProviderMainDetail from "../components/ProviderList/ProviderMain";
 import handleNotification from "../components/api/Notification/handleNotification";
 import { toast, ToastContainer } from "react-toastify";
 import UserRatingModal from "../components/ui/modals/UserRatingModal";
-
+import PageNotFound from "../components/ui/pagenotfound/PagenotFound";
 export default function PrivateRoutes() {
   const { user } = useContext(AuthContext);
   const userid = user?.id;
@@ -49,6 +49,7 @@ export default function PrivateRoutes() {
 
   return (
     <>
+    
       <Navigation
         role={role}
         notificationstatus={notificationstatus}
@@ -56,6 +57,7 @@ export default function PrivateRoutes() {
       />
 
       <Routes>
+        <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<Main role={role} />} />
         <Route path="providerauth" element={<ProviderMain />} />
         <Route path="dashboard" element={<MainDashboard />} />
@@ -63,6 +65,7 @@ export default function PrivateRoutes() {
         <Route path="profile" element={<Profilemain />} />
         <Route path="editprofile" element={<EditProfile />} />
         <Route path="booking/:id" element={<ProviderMainDetail />} />
+        
         <Route
           path="becomeapro"
           element={

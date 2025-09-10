@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         try {
           const res = await axios.get("/api/auth/user/");
+
           setUser(res.data);
         } catch (err) {
           Logout();
@@ -26,36 +27,30 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
- const login = async (credentials, navigate) => {
-  setLoading(true);
-  try {
-    if (!credentials.username || !credentials.password) {
-      setError({ message: "Please fill in all fields" });
-      return;
+  const login = async (credentials, navigate) => {
+    setLoading(true);
+    try {
+      if (!credentials.username || !credentials.password) {
+        setError({ message: "Please fill in all fields" });
+        return;
+      }
+
+      const response = await axios.post("/api/auth/login/", credentials);
+      if (response.status === 200) {
+        const { access, refresh } = response.data;
+        localStorage.setItem("accesstoken", access);
+        localStorage.setItem("refreshtoken", refresh);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+        setError(null);
+        navigate("/");
+      }
+    } catch (err) {
+      setError({ message: "Invalid credentials" });
+    } finally {
+      setLoading(false);
     }
-
-    const response = await axios.post("/api/auth/login/", credentials);
-    if (response.status === 200) {
-      
-      const { access, refresh } = response.data;
-      localStorage.setItem("accesstoken", access);
-      localStorage.setItem("refreshtoken", refresh);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-
-      
-      const userRes = await axios.get("/api/auth/user/");
-      setUser(userRes.data);
-
-      setError(null);
-      
-    }
-  } catch (err) {
-    setError({ message: "Invalid credentials" });
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const register = async (credentials, navigate) => {
     try {
@@ -82,7 +77,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("refreshtoken");
     setUser(null);
     delete axios.defaults.headers.common["Authorization"];
-    navigate('/auth/login');
+    window.location.href = "/auth/login";
   };
 
   return (

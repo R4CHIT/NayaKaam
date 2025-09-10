@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate,useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import LoadingEffect from "../components/ui/LoadingEffect";
 
 const Privateroute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-
+  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -14,7 +14,7 @@ const Privateroute = ({ children }) => {
     );
   }
 
-  if (!user || !localStorage.getItem("accesstoken")) {
+  if (!localStorage.getItem("accesstoken") && !user) {
     return <Navigate to="/auth/login" replace />;
   }
 

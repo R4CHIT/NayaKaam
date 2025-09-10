@@ -17,24 +17,38 @@ import time
 from django.db.models import Q
 # Create your views here.
 
+from django.shortcuts import get_object_or_404
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+
 class MakeBooking(generics.CreateAPIView):
     serializer_class = BookingSerializers
     permission_classes = [IsAuthenticated]
+
     def perform_create(self, serializer):
         customer = self.request.user
-        provider_id = self.request.data.get('provider')
-        price = ProviderDetails.objects.get(user=provider_id)
-        serializer.save(customer=customer,price=price.price)
-        provider_user = get_object_or_404(User, id=1)
+        provider_user_id = self.request.data.get('provider')
 
+        # Get provider user
+        provider_user = get_object_or_404(User, id=provider_user_id)
+
+        provider_details = get_object_or_404(ProviderDetails, user=provider_user)
+
+        # Save booking
+        serializer.save(
+            customer=customer,
+            provider=provider_user,
+            price=provider_details.price
+        )
+
+        # Create notification
         Notification.objects.create(
             sender=customer,
-            receiver=provider_user,  
+            receiver=provider_user,
             message="Booking Created",
             booking_time=self.request.data.get('booking_time'),
-            location = self.request.data.get('location')
+            location=self.request.data.get('location')
         )
-        return super().perform_create(serializer)
 
 
 class GetBooking(generics.ListAPIView):

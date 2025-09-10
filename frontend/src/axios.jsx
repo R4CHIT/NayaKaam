@@ -24,10 +24,9 @@ instance.interceptors.response.use(
 
         return instance(originalRequest);
       } catch (err) {
-        // 🚨 Refresh also failed → force logout
         localStorage.removeItem("accesstoken");
         localStorage.removeItem("refreshtoken");
-        window.location.href = "/login"; 
+        
       }
     }
 
