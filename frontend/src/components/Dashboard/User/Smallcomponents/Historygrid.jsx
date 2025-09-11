@@ -1,71 +1,64 @@
 import React from 'react'
-
-const Historygrid = ({job,renderStars}) => {
+import {
+  FaUser,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaMoneyBillWave,
+} from "react-icons/fa";
+import { MdWork } from "react-icons/md";
+const Historygrid = ({job,getStatusBadge,renderStars }) => {
   return (
-   <div
-      key={job.id}
-      className="rounded-lg w-full shadow-md p-6 border hover:shadow-lg transition-shadow duration-200 relative bg-slate-800 border-slate-700"
-    >
+    <>
+      <div
+                      key={job.id}
+                      className="w-full bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition"
+                    >
+                      <div className="flex justify-between items-center mb-3">
+                        <h2 className="text-base font-semibold text-gray-800 flex items-center">
+                          <MdWork className="mr-2 text-indigo-500" />{" "}
+                          {job.service}
+                        </h2>
+                        {getStatusBadge(job.status)}
+                      </div>
 
+                      <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                        <p className="flex items-center">
+                          <FaUser className="mr-2 text-gray-500" />{" "}
+                          {job.customername}
+                        </p>
+                        <p className="flex items-center">
+                          <FaUser className="mr-2 text-gray-500" />{" "}
+                          {job.provider}
+                        </p>
+                        <p className="flex items-center">
+                          <FaMapMarkerAlt className="mr-2 text-gray-500" />{" "}
+                          {job.location}
+                        </p>
+                        <p className="flex items-center">
+                          <FaCalendarAlt className="mr-2 text-gray-500" />{" "}
+                          {new Date(job.booking_time).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }
+                          )}
+                        </p>
+                        <p className="flex items-center">
+                          <FaMoneyBillWave className="mr-2 text-green-500" /> $
+                          {job.price}
+                        </p>
+                        <p className="flex items-center">
+                          <MdWork className="mr-2 text-gray-500" /> {job.notes}
+                        </p>
+                      </div>
 
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold mb-2 text-white">
-          {job.service}
-        </h3>
-        <div className="flex items-center justify-between mb-2 text-cyan-400">
-          <h4 className="text-lg font-medium">
-            Client: {job.client}
-          </h4>
-          <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
-            {job.type}
-          </span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-slate-300">
-        <div className="flex items-center">
-          <span className="mr-2 text-cyan-400">📅</span>
-          <span>
-            {new Date(job.date).toLocaleDateString('en-US', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </span>
-        </div>
-
-        <div className="flex items-center">
-          <span className="mr-2 text-cyan-400">⏱️</span>
-          <span>{job.duration}</span>
-        </div>
-
-        <div className="flex items-center">
-          <span className="mr-2 text-cyan-400">📍</span>
-          <span>{job.location}</span>
-        </div>
-
-        <div className="flex items-center">
-          <span className="mr-2 text-cyan-400">💰</span>
-          <span className="font-semibold text-emerald-500">{job.payment}</span>
-        </div>
-      </div>
-
-      <p className="text-sm mb-4 leading-relaxed text-slate-300">
-        {job.description}
-      </p>
-
-      <div className="border-t pt-4 flex justify-between items-center border-slate-700">
-        <div>
-          <span className="text-sm font-medium mb-2 block text-white">
-            Rating:
-          </span>
-          {renderStars(job.rating)}
-        </div>
-
-        
-      </div>
-    </div>
+                      {job.status === "completed" && renderStars(job.id)}
+                    </div>
+    </>
   )
 }
 

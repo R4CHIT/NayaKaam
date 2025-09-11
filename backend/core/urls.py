@@ -52,9 +52,6 @@ urlpatterns = [
     path('api/getcategory/',Get_Category.as_view(),name="GetCategory"),
     path('api/getcategoryDetails/',Get_AllCtegory.as_view(),name="GetCategory"),
 
-    #Provider roles
-    path('api/getRole/',GetUserRole.as_view(),name="GetRole"),
-    
     #profile update
     path('api/updateprofile/<int:userId>/', UpdateApiView.as_view(), name="UpdateProfile"),
     path("api/updateproviderrating/<int:pk>/", UpdateProviderRating.as_view(), name="Updaterating"),
@@ -62,7 +59,7 @@ urlpatterns = [
     #Booking
     path('api/booking/',MakeBooking.as_view()),
     path('api/getbooking/',GetBooking.as_view()),
-    path("api/getcompletedbooking", getCompletedBooking.as_view(), name="history"),
+    path("api/getcompletedbooking/", getCompletedBooking.as_view(), name="history"),
 
     #booking Summary
     path("api/getBookingSummary", getBookingSummary.as_view(), name=""),

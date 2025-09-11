@@ -14,17 +14,17 @@ const Bookinggrid = ({ booking }) => {
     setStatus(newstatus);
     try {
       const data = {
-  user: user?.username || "Guest",       // who triggered the action
-  bookingId: booking?.id || null,        // booking reference
-  providerId: user?.id || "N/A",  // provider name
-  service: booking?.service || "Service",// service type
-  status: newstatus,                     // updated booking status
-  message: `Your booking is now ${newstatus}`, // notification text
-  notes: `Booking updated by ${user?.username}`, // optional extra info
-  timestamp: new Date().toISOString(),   // when this happened
+    user: user?.username || "Guest",       // who triggered the action
+    bookingId: booking?.id || null,        // booking reference
+    providerId: user?.id || "N/A",  // provider name
+    service: booking?.service || "Service",// service type
+    status: newstatus,                     // updated booking status
+    message: `Your booking is now ${newstatus}`, // notification text
+    notes: `Booking updated by ${user?.username}`, // optional extra info
+    timestamp: new Date().toISOString(),   // when this happened
 };
       setLoading(true);
-      sendNotifiaction(booking.customer, data, user.username);
+      sendNotifiaction(booking.customer,data, user.username);
       await updateBookingStatus({ status: newstatus }, booking.id);
       toast.dismiss();
       toast.success(`Booking ${newstatus} successfully!`);

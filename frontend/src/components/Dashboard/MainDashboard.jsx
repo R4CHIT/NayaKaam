@@ -4,8 +4,8 @@ import Navigation from '../Mainpage/Navbar/Navigation'
 import AuthContext from '../../context/AuthContext'
 import CustomerDashboard from './customer/CustomerDashboard'
 const MainDashboard = () => {
-  const {role} = useContext(AuthContext)
-  
+  const {user} = useContext(AuthContext)
+  const role = user?.roles;
   return (
     
     <>

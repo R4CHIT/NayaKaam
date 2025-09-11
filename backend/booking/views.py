@@ -112,7 +112,17 @@ class UpdateOrderStatus(generics.UpdateAPIView):
     permission_classes=[IsAuthenticated]
     def patch(self, request,pk):
         status = request.data.get("status")
-        booking=Booking.objects.filter(id=pk).update(status=status)
+        booking=Booking.objects.get(id=pk)
+        booking.status =status
+        booking.save()
+        Notification.objects.create(
+            sender=booking.provider,
+            receiver= booking.customer,
+            message="Booking Created",
+            booking_time=self.request.data.get('booking_time'),
+            location=self.request.data.get('location')
+        )
+        
 
         if booking:
             return Response({"message": "Booking status updated!"}, status=200)
