@@ -115,10 +115,11 @@ class UpdateOrderStatus(generics.UpdateAPIView):
         booking=Booking.objects.get(id=pk)
         booking.status =status
         booking.save()
+        
         Notification.objects.create(
             sender=booking.provider,
             receiver= booking.customer,
-            message="Booking Created",
+            message="Booking "+status,
             booking_time=self.request.data.get('booking_time'),
             location=self.request.data.get('location')
         )

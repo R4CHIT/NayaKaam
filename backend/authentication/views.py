@@ -66,19 +66,20 @@ class loginView(generics.GenericAPIView):
             }, status=401)
         
 class changePassword(generics.GenericAPIView):
+    permission_classes = [Isauthenticated]
     serializer_class=ChangePassword
     def post (self,request,*args, **kwargs):
-        username = request.data.get('username')
+        username = request.user.username
         prevpassword = request.data.get('prevpassword')
         newpassword = request.data.get('newpassword')
-
+    
         user = authenticate(username=username, password=prevpassword)
 
         if user is not None :
             user.set_password(newpassword)
             user.save()
             return Response({"message":"Password Changed"},status=200)
-        return Response({"message":"User not exist"},status=401)
+        return Response({"message":"User not exist"},status=500)
 
 
 
@@ -130,15 +131,19 @@ class Changeresetpassword(generics.CreateAPIView):
         user.save()
         return Response({"message": "Password has been reset successfully."}, status=200)
     
-class GetUserRole(generics.RetrieveAPIView):
-    permission_classes = [Isauthenticated]
-    def get(self, request):
-        try:
-            userId = request.user
-            role = User.objects.get(user=userId)
-            
-            return Response(role)
-        except role.DoesNotExist:
-            return Response({"error": "Role not found"}, status=404)
-        
+class ChangeUserInfo(generics.UpdateAPIView):
+    
+    serializer_class=UserSerializer
+    permission_classes=[Isauthenticated]
 
+    def patch(self, request, *args, **kwargs):
+        user = request.user
+        serializer = UserSerializer(
+            user,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)

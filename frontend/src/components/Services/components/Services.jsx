@@ -135,7 +135,6 @@ const Services = () => {
   : popularServices.filter(
     (service) => service.category.toLowerCase() === selectedCategory.toLowerCase()
   );
-  console.log(selectedCategory)
   const searchFilteredServices = filteredServices.filter((service) =>
     service.category?.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -205,6 +204,7 @@ const Services = () => {
           <div className="flex space-x-3 overflow-x-auto pb-2">
             {categories.map((category) => (
               <Category
+              index={category.id}
                 category={category}
                 setSelectedCategory={setSelectedCategory}
                 selectedCategory={selectedCategory}

@@ -1,18 +1,32 @@
-import React from 'react'
-import PasswordChange from './Setting/PasswordChange'
-import AccountDelete from './Setting/AccountDelete'
-import LoginActivity from './Setting/LoginActivity'
+import React, { useState } from "react";
+import {
+  FaLock,
+  FaSignOutAlt,
+  FaTrash,
+  FaSave,
+  FaEye,
+  FaEyeSlash,
+  FaExclamationTriangle,
+  FaCheck,
+} from "react-icons/fa";
+import InformationChange from "./Setting/InformationChange";
+import Security from "./Setting/Security";
+import AccountDelete from "./Setting/AccountDelete";
 
-const Setting = () => {
+const Settings = () => {
   return (
-    <div>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-        <PasswordChange />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 lg:p-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200">
+        <InformationChange
+        
+        />
+
+        <Security />
+
         <AccountDelete />
-        <LoginActivity />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Setting
+export default Settings;

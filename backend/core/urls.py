@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("api/auth/user/", UserView.as_view(),name="user_view"), 
     path('api/auth/changepassword/',changePassword.as_view(),name='change_password'),
+    path("api/changeuserinfo/", ChangeUserInfo.as_view(), name=""),
 
      #Email veryfy
     path('api/reset-password/', SendResetEmail.as_view(), name='password_reset'),

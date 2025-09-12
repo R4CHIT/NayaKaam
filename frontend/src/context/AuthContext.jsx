@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
 
         setError(null);
+        setUser(response.data.user);
         navigate("/");
       }
     } catch (err) {
@@ -77,7 +78,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("refreshtoken");
     setUser(null);
     delete axios.defaults.headers.common["Authorization"];
-    window.location.href = "/auth/login";
+    navigate('/auth/login')
   };
 
   return (

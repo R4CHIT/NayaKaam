@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Bookinggrid from "./Smallcomponents/Bookinggrid";
 import LoadingEffect from "../../ui/LoadingEffect";
-import getBookingHistory from "../../api/Booking/getBookingHistory";
+
 const Booking = ({ bookings }) => {
   const [data, setData] = useState(bookings.results || []);
   const [nextUrl, setNextUrl] = useState(bookings.next);

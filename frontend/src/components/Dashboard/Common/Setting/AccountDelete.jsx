@@ -1,115 +1,107 @@
-import React, { useContext, useState } from "react";
-import {
-  FaTrashAlt,
-  FaSignOutAlt,
-  FaExclamationTriangle,
-} from "react-icons/fa";
-import Button from "../../../ui/Button"; // ✅ use your actual button component
-import AuthContext from '../../../../context/AuthContext'
-
+import React, { use } from "react";
+import { FaSignOutAlt, FaTrash, FaExclamationTriangle } from "react-icons/fa";
+import AuthContext from "../../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const AccountDelete = () => {
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const {Logout}  = useContext(AuthContext);
-
-  const handleDelete = () => {
-    if (!confirmDelete) {
-      setConfirmDelete(true);
-      return;
-    }
-
-    console.log("Account permanently deleted");
-    setTimeout(() => setConfirmDelete(false), 2000);
+  const navigate = useNavigate();
+  const {Logout} = React.useContext(AuthContext)
+  const [showDeleteConfirm, setShowDeleteConfirm] = React.useState(false);
+  const handleLogout =async () => {
+    Logout(navigate);
   };
 
-  const handleLogout = () => {
-    Logout();
+  const handleDeleteAccount = () => {
+    console.log("Deleting account...");
+    setShowDeleteConfirm(false);
   };
-
   return (
-    <div className="max-w-full">
-      {/* Main Card */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-5 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-100 rounded-xl">
-              <FaTrashAlt className="w-5 h-5 text-red-600" />
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900">
-                Account Settings
-              </h2>
-              <p className="text-sm text-gray-600 mt-1">
-                Manage your account preferences
-              </p>
-            </div>
-          </div>
+    <>
+      <div className="p-6">
+        <div className="flex items-center space-x-3 mb-6">
+          <FaExclamationTriangle className="text-blue-600" size={24} />
+          <h2 className="text-xl font-semibold text-slate-800">
+            Account Actions
+          </h2>
         </div>
 
-        
-        <div className="p-6 space-y-6">
-          
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-              Session
-            </h3>
-            <Button
-              variant="secondary"
-              onClick={()=>handleLogout()}
-              className="w-full"
-              title={
-                <div className="flex items-center justify-center gap-2">
-                  <FaSignOutAlt className="w-4 h-4" />
-                  Sign Out
-                </div>
-              }
-            ></Button>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t border-gray-200"></div>
-
-          {/* Danger Zone */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <FaExclamationTriangle className="w-4 h-4 text-amber-500" />
-              <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">
-                Danger Zone
-              </h3>
+        <div className="space-y-6">
+          <div className="bg-slate-50 rounded-lg p-6 border border-slate-200">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <FaSignOutAlt className="text-slate-600" size={24} />
+              </div>
+              <div className="flex-grow">
+                <h3 className="text-lg font-medium text-slate-800 mb-2">
+                  Logout
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  Sign out of your account on this device. You'll need to sign
+                  in again to access your account.
+                </p>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2 px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
+                >
+                  <FaSignOutAlt size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
             </div>
-
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-              <div className="space-y-3">
-                <div>
-                  <h4 className="font-medium text-red-900">Delete Account</h4>
-                  <p className="text-sm text-red-700 mt-1">
-                    Once you delete your account, there is no going back. This
-                    action cannot be undone.
-                  </p>
-                </div>
-
-                <Button
-                  variant="danger"
-                  onClick={handleDelete}
-                  className={`w-full transition-all duration-300 ${
-                    confirmDelete
-                      ? "bg-red-700 hover:bg-red-800 animate-pulse"
-                      : "bg-red-600 hover:bg-red-700"
-                  }`}
-                  title={
-                    <div className="flex items-center justify-center gap-2">
-                      <FaTrashAlt className="w-4 h-4" />
-                      {confirmDelete ? "Confirm Delete" : "Delete Account"}
-                    </div>
-                  }
-                >      
-                </Button>
+          </div>
+          <div className="bg-red-50 rounded-lg p-6 border border-red-200">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <FaTrash className="text-red-600" size={24} />
+              </div>
+              <div className="flex-grow">
+                <h3 className="text-lg font-medium text-red-800 mb-2">
+                  Delete Account
+                </h3>
+                <p className="text-red-600 mb-4">
+                  Permanently delete your account and all associated data. This
+                  action cannot be undone.
+                </p>
+                <button
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                >
+                  <FaTrash size={16} />
+                  <span>Delete Account</span>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xl bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full">
+            <div className="flex items-center space-x-3 mb-4">
+              <FaExclamationTriangle className="text-red-600" size={24} />
+              <h3 className="text-lg font-semibold text-slate-800">Confirm Account Deletion</h3>
+            </div>
+            <p className="text-slate-600 mb-6">
+              Are you absolutely sure you want to delete your account? This action is permanent and cannot be undone.
+              All your data will be permanently deleted.
+            </p>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+              >
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
