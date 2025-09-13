@@ -9,7 +9,7 @@ const sendNotifiaction = (user_id,data,username) => {
   socket.onopen = () => {
     if (data != null || username != null) {
       if (location.pathname !== "/") {
-        socket.send(
+       socket.send(
           JSON.stringify({
             message: data,
             sender: username,

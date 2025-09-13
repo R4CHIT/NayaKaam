@@ -38,6 +38,9 @@ urlpatterns = [
     path('api/auth/changepassword/',changePassword.as_view(),name='change_password'),
     path("api/changeuserinfo/", ChangeUserInfo.as_view(), name=""),
 
+    #delete account very critical
+    path("api/deleteaccount/", DeleteAccount.as_view(), name="delete_account"),
+
      #Email veryfy
     path('api/reset-password/', SendResetEmail.as_view(), name='password_reset'),
     path('api/password-reset-confirm/', Changeresetpassword.as_view(), name='password_reset_confirm'),

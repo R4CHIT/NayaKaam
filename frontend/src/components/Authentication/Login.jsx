@@ -30,60 +30,63 @@ function Login() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-6">
-      <form
-        className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-3"
-        onSubmit={handleSubmit}
-      >
-        <h2 className="text-4xl font-bold text-center text-orange-500 ">
-          Login
-        </h2>
+ return (
+  <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-200">
 
-        <InputDetails
-          title={"Username"}
-          type="text"
-          placeholder={"Username & Email"}
-          ref={usernameRef}
-        />
+    
+    <form
+      className="relative bg-white/50 p-10 rounded-3xl shadow-xl border border-slate-200 w-full max-w-sm flex flex-col gap-3 z-10"
+      onSubmit={handleSubmit}
+    >
+      <h2 className="text-4xl font-bold text-center text-orange-500">
+        Login
+      </h2>
 
-        <InputDetails
-          title={"Password"}
-          type="text"
-          placeholder={"Enter your Password"}
-          ref={passwordRef}
-        />
+      <InputDetails
+        title={"Username"}
+        type="text"
+        placeholder={"Username & Email"}
+        ref={usernameRef}
+      />
 
-        {error?.message && (
-          <span className="text-red-500 text-sm block font-semibold text-center">
-            {error.message}
-          </span>
-        )}
+      <InputDetails
+        title={"Password"}
+        type="text"
+        placeholder={"Enter your Password"}
+        ref={passwordRef}
+      />
 
-        <Button title={loading ? <LoadingEffect /> : "Login"} type={"submit"}>
-          Login
-        </Button>
+      {error?.message && (
+        <span className="text-red-600 text-sm block font-semibold text-center bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+          {error.message}
+        </span>
+      )}
 
-        <p className="text-center text-slate-700 text-sm">
-          <Link
-            to="/auth/reset"
-            className="hover:underline hover:text-cyan-400"
-          >
-            forget password
-          </Link>
-        </p>
-        <p className="text-center text-slate-700 text-sm">
-          Don't have an account?{" "}
-          <Link
-            to="/auth/register"
-            className="hover:underline hover:text-cyan-400"
-          >
-            Register
-          </Link>
-        </p>
-      </form>
-    </div>
-  );
+      <Button title={loading ? <LoadingEffect /> : "Login"} type={"submit"}>
+        Login
+      </Button>
+
+      <p className="text-center text-slate-600 text-sm">
+        <Link
+          to="/auth/reset"
+          className="hover:underline hover:text-blue-600 transition-colors duration-200"
+        >
+          forget password
+        </Link>
+      </p>
+      <p className="text-center text-slate-600 text-sm">
+        Don't have an account?{" "}
+        <Link
+          to="/auth/register"
+          className="hover:underline hover:text-blue-600 transition-colors duration-200"
+        >
+          Register
+        </Link>
+      </p>
+    </form>
+  </div>
+);
+
 }
 
 export default Login;

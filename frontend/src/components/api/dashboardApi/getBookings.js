@@ -7,7 +7,6 @@ const getBookings =async (setBookings,api) => {
     }
   })
   if(res.status === 200){
-    console.log(res.data)
     setBookings(res.data)
   }
   

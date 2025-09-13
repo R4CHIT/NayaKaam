@@ -1,19 +1,53 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { FaSignOutAlt, FaTrash, FaExclamationTriangle } from "react-icons/fa";
 import AuthContext from "../../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import PasswordField from "./fields/PasswordFiels";
+import deleteAccount from "../../../api/dashboardApi/deleteAccount";
+import Swal from "sweetalert2";
+
 const AccountDelete = () => {
   const navigate = useNavigate();
   const {Logout} = React.useContext(AuthContext)
   const [showDeleteConfirm, setShowDeleteConfirm] = React.useState(false);
+ const [password, setPassword] = useState("");
+ const [showPassword, setShowPassword] = useState(false);
+
   const handleLogout =async () => {
     Logout(navigate);
   };
 
-  const handleDeleteAccount = () => {
-    console.log("Deleting account...");
-    setShowDeleteConfirm(false);
-  };
+  const handleDeleteAccount = async () => {
+  try {
+    const status = await deleteAccount(password);
+
+    if (status === 204 || status === 200) {
+      await Swal.fire({
+        icon: "success",
+        title: "Account Deleted",
+        text: "Your account has been deleted successfully ✅",
+        confirmButtonColor: "#dc2626",
+      });
+      Logout(navigate)
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Could not delete your account. Please try again ❌",
+        confirmButtonColor: "#dc2626",
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text:
+        error.response?.data ||
+        "Something went wrong. Check your connection and try again.",
+      confirmButtonColor: "#dc2626",
+    });
+  }
+};
   return (
     <>
       <div className="p-6">
@@ -74,33 +108,58 @@ const AccountDelete = () => {
         </div>
       </div>
       {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-xl bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full">
-            <div className="flex items-center space-x-3 mb-4">
-              <FaExclamationTriangle className="text-red-600" size={24} />
-              <h3 className="text-lg font-semibold text-slate-800">Confirm Account Deletion</h3>
-            </div>
-            <p className="text-slate-600 mb-6">
-              Are you absolutely sure you want to delete your account? This action is permanent and cannot be undone.
-              All your data will be permanently deleted.
-            </p>
-            <div className="flex space-x-3">
-              <button
-                onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDeleteAccount}
-                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-              >
-                Delete Account
-              </button>
-            </div>
-          </div>
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-xl bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-xl p-6 max-w-md w-full">
+      <div className="flex items-center space-x-3 mb-4">
+        <FaExclamationTriangle className="text-red-600" size={24} />
+        <h3 className="text-lg font-semibold text-slate-800">
+          Confirm Account Deletion
+        </h3>
+      </div>
+
+      <p className="text-slate-600 mb-6">
+        Are you absolutely sure you want to delete your account? This action is
+        permanent and cannot be undone. All your data will be permanently deleted.
+      </p>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleDeleteAccount(password);
+        }}
+        className="space-y-4"
+      >
+        
+        <PasswordField
+          label="Enter your password to confirm"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          isVisible={showPassword}
+          onToggle={() => setShowPassword((prev) => !prev)}
+          placeholder="Enter your password"
+        />
+
+        <div className="flex space-x-3">
+          <button
+            type="button"
+            onClick={() => setShowDeleteConfirm(false)}
+            className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+          >
+            Delete Account
+          </button>
         </div>
-      )}
+      </form>
+    </div>
+  </div>
+)}
+
     </>
   );
 };

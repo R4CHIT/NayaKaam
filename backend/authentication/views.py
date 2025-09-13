@@ -147,3 +147,16 @@ class ChangeUserInfo(generics.UpdateAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+#Delete Account
+class DeleteAccount(generics.DestroyAPIView):
+    permission_classes = [Isauthenticated]
+
+    def post(self, request, *args, **kwargs):
+        username = request.user.username
+        password = request.data.get('password')
+        user = authenticate(username=username,password=password)
+        if user is None:
+            return Response("Password Doesn't match!", status=400)
+        request.user.delete()
+        return Response("Account deleted successfully", status=200)

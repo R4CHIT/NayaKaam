@@ -13,6 +13,7 @@ import handleNotification from "../components/api/Notification/handleNotificatio
 import { toast, ToastContainer } from "react-toastify";
 import UserRatingModal from "../components/ui/modals/UserRatingModal";
 import PageNotFound from "../components/ui/pagenotfound/PagenotFound";
+import ChatMain from "../components/Chat/ChatMain";
 export default function PrivateRoutes() {
   const { user } = useContext(AuthContext);
   const userid = user?.id;
@@ -65,7 +66,7 @@ export default function PrivateRoutes() {
         <Route path="profile" element={<Profilemain />} />
         <Route path="editprofile" element={<EditProfile />} />
         <Route path="booking/:id" element={<ProviderMainDetail />} />
-        
+        <Route path="chat" element={<ChatMain />} />
         <Route
           path="becomeapro"
           element={

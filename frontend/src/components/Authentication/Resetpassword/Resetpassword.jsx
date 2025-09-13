@@ -44,7 +44,7 @@ const Resetpassword = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-6">
+    <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-200">
       <div className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-xl w-full max-w-sm flex flex-col gap-5">
         <h2 className="text-4xl font-bold text-center text-orange-500 mb-8">
           Reset Password

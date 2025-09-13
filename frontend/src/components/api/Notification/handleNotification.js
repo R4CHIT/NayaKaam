@@ -10,7 +10,7 @@ const handleNotification = (user_id, setNotifications) => {
 
       setNotifications(data);
     } catch (err) {
-      console.error("Invalid websocket message:", e.data);
+      
     }
   };
 
