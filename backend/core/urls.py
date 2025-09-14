@@ -27,6 +27,7 @@ from userprofile.views import *
 from category.views import *
 from booking.views import *
 from notification.views import *
+from message.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -79,7 +80,13 @@ urlpatterns = [
     path("api/getunreadnotification", GetUnreadNotification.as_view(), name=""),
     path("api/readallnotification", ReadAllNotification.as_view(), name=""),
     path("api/readnotification/<int:pk>/", ReadNotification.as_view(), name=""),
-    path("api/updatestatus/<int:pk>/", UpdateOrderStatus.as_view(), name="")
+    path("api/updatestatus/<int:pk>/", UpdateOrderStatus.as_view(), name=""),
+
+
+    #message
+    path("api/getusericon/", UserMessageIcon.as_view(), name="GetUserIcon"),
+    path("api/getmessage/<int:pk>/", MessageView.as_view(), name="GetAllMessage"),
+    path("api/searchuser/", SearchUserView.as_view(), name="")
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
