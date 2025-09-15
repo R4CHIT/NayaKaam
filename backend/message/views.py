@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response 
 from rest_framework.permissions import IsAuthenticated
-from .serializers import MessageSerializer,UserSerializer
+from .serializers import MessageSerializer,UserSerializer,SidebarMessageSerializer
 from .models import Message
 from django.db.models import Subquery,Q,OuterRef
 from django.contrib.auth import authenticate, get_user_model
@@ -10,7 +10,7 @@ User = get_user_model()
 # Create your views here.
 class UserMessageIcon(generics.ListAPIView):
     
-    serializer_class = MessageSerializer
+    serializer_class = SidebarMessageSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):

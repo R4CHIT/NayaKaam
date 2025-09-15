@@ -1,63 +1,74 @@
 import React from "react";
-import { 
-  FiSend, 
-  FiPaperclip, 
-  FiSmile, 
-  FiMoreVertical, 
-  FiPhone, 
-  FiVideo, 
-  FiSearch,
- 
-  FiMenu,
-    FiX 
-} from 'react-icons/fi'
-const ChatList = ({chat ,setSidebarOpen,setSelectedChat,selectedChat}) => {
+import getMessage from "../../api/message/getMessage";
+
+const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMessages,setMainBar}) => {
+  // Format timestamp
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${date.getHours()}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+const handleClick=async()=>{
+  const res = await getMessage(chat.user.id)
+  setMessages(res.data.results)
+  setMainBar({
+    id:chat.id,
+    username:chat.user.username,
+    profilepic:chat.user.profilepic
+  })
+}
   return (
-    <>
-      <div
-        key={chat.id}
-        onClick={() => {
-          setSelectedChat(chat.id);
-          setSidebarOpen(false);
-        }}
-        className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors border-l-4 ${
-          selectedChat === chat.id
-            ? "bg-blue-50 border-blue-500"
-            : "border-transparent"
-        }`}
-      >
-        <div className="flex items-center space-x-3">
-          <div className="relative">
+    <div
+      key={chat.id}
+      onClick={() => {
+        setSelectedChat(chat.id);
+        setSidebarOpen(false);
+        handleClick()
+      }}
+      className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors border-l-4 ${
+        selectedChat === chat.id
+          ? "bg-blue-50 border-blue-500"
+          : "border-transparent"
+      }`}
+    >
+      <div className="flex items-center space-x-3">
+        <div className="relative w-12 h-12">
+          {chat.user.profilepic ? (
             <img
-              src={chat.avatar}
-              alt={chat.name}
+              src={`http://127.0.0.1:8000${chat.user.profilepic}`}
+              alt={chat.user.username}
               className="w-12 h-12 rounded-full object-cover"
             />
-            {chat.online && (
-              <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-            )}
+          ) : (
+            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
+              {chat.user.username.charAt(0).toUpperCase()}
+            </div>
+          )}
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-gray-900 truncate">
+              {chat.user.username}
+            </h3>
+            <span className="text-xs text-gray-500">
+              {formatTime(chat.timestamp)}
+            </span>
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-gray-900 truncate">
-                {chat.name}
-              </h3>
-              <span className="text-xs text-gray-500">{chat.time}</span>
-            </div>
-            <div className="flex items-center justify-between mt-1">
-              <p className="text-sm text-gray-600 truncate">
-                {chat.lastMessage}
-              </p>
-              {chat.unread > 0 && (
-                <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500 rounded-full min-w-[20px]">
-                  {chat.unread}
-                </span>
-              )}
-            </div>
+
+          <div className="flex items-center justify-between mt-1">
+            <p className="text-sm text-gray-600 truncate">{chat.content}</p>
+            {!chat.read && (
+              <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-blue-500 rounded-full min-w-[20px]">
+                1
+              </span>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

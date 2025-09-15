@@ -42,7 +42,7 @@ const Navigation = ({ role, notificationstatus, setNotificationStatus }) => {
             <Link to="/becomeapro">Become a Pro</Link>
           </li>
           <li className="hover:text-yellow-300 transition-colors">
-            <Link to="/profile">Chats</Link>
+            <Link to="/chat">Chats</Link>
           </li>
         </div>
       ) : (

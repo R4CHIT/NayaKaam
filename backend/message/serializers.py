@@ -51,3 +51,22 @@ class MessageSerializer(serializers.ModelSerializer):
             return {}
         return UserSerializer(obj.recipient).data
 
+
+class SidebarMessageSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Message
+        fields = ['id', 'content', 'timestamp', 'read', 'user']
+
+    def get_user(self, obj):
+        """Return the other user (not the logged-in user)"""
+        request_user = self.context['request'].user
+        other_user = obj.recipient if obj.sender == request_user else obj.sender
+
+        if other_user.roles == "provider":
+            provider = other_user.providerdetails_set.first()
+            if provider:
+                return ProviderSerializer(provider).data
+            return {}
+        return UserSerializer(other_user).data
