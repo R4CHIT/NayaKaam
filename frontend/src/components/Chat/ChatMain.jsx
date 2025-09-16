@@ -12,7 +12,6 @@ const ChatMain = () => {
   const [messages, setMessages] = useState([])
   const [mainBar,setMainBar]=useState([])
   const [chats, setChats] = useState([])
-  console.log(mainBar)
   useEffect(() => {
     const fetchData = async () => {
         try {
@@ -52,7 +51,7 @@ const ChatMain = () => {
               </div>
       </div>
 
-      <UserMessage messages={messages} currentChat={currentChat} setSidebarOpen={setSidebarOpen} messagesEndRef={messagesEndRef} mainBar={mainBar}/>
+      <UserMessage messages={messages} currentChat={currentChat} setSidebarOpen={setSidebarOpen} messagesEndRef={messagesEndRef} mainBar={mainBar} setMessages={setMessages}/>
 
       
       {sidebarOpen && (

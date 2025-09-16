@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import getMessage from "../../api/message/getMessage";
-
+import {socketconnect} from "../../api/message/socketconnect";
+import AuthContext from '../../../context/AuthContext'
 const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMessages,setMainBar}) => {
-  // Format timestamp
+  
+  
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
     return `${date.getHours()}:${date
@@ -10,14 +12,18 @@ const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMess
       .toString()
       .padStart(2, "0")}`;
   };
+  const {user}=useContext(AuthContext)
 const handleClick=async()=>{
   const res = await getMessage(chat.user.id)
   setMessages(res.data.results)
   setMainBar({
-    id:chat.id,
+    id:chat.user.id,
     username:chat.user.username,
     profilepic:chat.user.profilepic
+    
   })
+  await socketconnect(user?.id,chat.user.id,setMessages)
+  
 }
   return (
     <div
