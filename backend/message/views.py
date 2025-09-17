@@ -8,6 +8,16 @@ from django.db.models import Subquery,Q,OuterRef
 from django.contrib.auth import authenticate, get_user_model
 User = get_user_model()
 # Create your views here.
+
+
+from rest_framework.pagination import PageNumberPagination
+
+class ChatPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
 class UserMessageIcon(generics.ListAPIView):
     
     serializer_class = SidebarMessageSerializer
@@ -33,13 +43,17 @@ class UserMessageIcon(generics.ListAPIView):
         ).order_by('-id')
 
 class MessageView(generics.ListAPIView):
+    pagination_class = ChatPagination
     serializer_class =MessageSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user.id
+        user = self.request.user 
         pk = self.kwargs.get('pk')
-        return Message.objects.filter(Q(sender=user,recipient=pk)|Q(sender=pk,recipient=user))
+
+        return Message.objects.filter(
+            Q(sender=user, recipient__id=pk) | Q(sender__id=pk, recipient=user)
+        ).order_by('id')
  
 class SearchUserView(generics.ListAPIView):
     serializer_class = UserSerializer
