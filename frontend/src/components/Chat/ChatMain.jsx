@@ -15,8 +15,7 @@ const ChatMain = () => {
   useEffect(() => {
     const fetchData = async () => {
         try {
-            const res = await getUserIcon(); 
-            console.log(res.data.results);
+            const res = await getUserIcon();
             setChats(res.data.results);
         } catch (error) {
             console.error("Error fetching user icon:", error);
@@ -46,7 +45,7 @@ const ChatMain = () => {
 
         <div className='flex-1 overflow-y-auto'>
                 {chats.map((chat) => (
-                  <ChatList chat={chat} setSidebarOpen={setSidebarOpen} setSelectedChat={setSelectedChat} selectedChat={selectedChat} setMessages={setMessages} setMainBar={setMainBar}/>
+                  <ChatList key={chat.id} chat={chat} setSidebarOpen={setSidebarOpen} setSelectedChat={setSelectedChat} selectedChat={selectedChat} setMessages={setMessages} setMainBar={setMainBar}/>
                 ))}
               </div>
       </div>

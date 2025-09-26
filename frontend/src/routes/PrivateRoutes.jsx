@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Navigation from "../components/Mainpage/Navbar/Navigation";
@@ -14,12 +14,16 @@ import { toast, ToastContainer } from "react-toastify";
 import UserRatingModal from "../components/ui/modals/UserRatingModal";
 import PageNotFound from "../components/ui/pagenotfound/PagenotFound";
 import ChatMain from "../components/Chat/ChatMain";
+import VideoCall from "../components/VideoCall/Videocallmain";
+import AcceptCallModal from "../components/ui/modals/AcceptcallModal";
+import WaitingForPeople from "../components/VideoCall/components/WaitingForPeople";
 export default function PrivateRoutes() {
+  
   const { user } = useContext(AuthContext);
   const userid = user?.id;
   const role = user?.roles;
   const [notificationstatus, setNotificationStatus] = useState(false);
-
+  const [showCallingModal,setShowCallingModal]=useState(false)
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(null);
   const [providerid, setProviderid] = useState(null);
@@ -33,7 +37,11 @@ export default function PrivateRoutes() {
       if (message.status === "completed") {
         setCurrentBooking({ ...message, sender });
         setShowRatingModal(true);
-      } else {
+      }else if(message.status ==='calling'){
+        setCurrentBooking({...message, sender})
+        setShowCallingModal((prev)=>!prev)
+      }
+       else {
         toast.info(
           <div>
             <strong>{sender || "Someone"}</strong> {message.status} your booking
@@ -67,6 +75,8 @@ export default function PrivateRoutes() {
         <Route path="editprofile" element={<EditProfile />} />
         <Route path="booking/:id" element={<ProviderMainDetail />} />
         <Route path="chat" element={<ChatMain />} />
+        <Route path="/videocall" element={<VideoCall />} />
+        <Route path="/waiting/:callerid/:receiverid" element={<WaitingForPeople />}/>
         <Route
           path="becomeapro"
           element={
@@ -83,6 +93,10 @@ export default function PrivateRoutes() {
           onClose={() => setShowRatingModal(false)}
           id={providerid}
         />
+      )}
+      {showCallingModal && (
+        <AcceptCallModal message={currentBooking}
+        setShowCallingModal={setShowCallingModal}/>
       )}
     </>
   );

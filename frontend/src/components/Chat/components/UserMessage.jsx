@@ -13,6 +13,7 @@ import { IoCheckmarkDone, IoCheckmark } from "react-icons/io5";
 import { sendMessage } from "../../api/message/socketconnect";
 import AuthContext from "../../../context/AuthContext";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ChatHeader from "./ChatHeader";
 const UserMessage = ({
   messages,
   currentChat,
@@ -114,34 +115,9 @@ const UserMessage = ({
   }
 
   const MainBar = () => (
-    <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
-      <div className="flex items-center space-x-4">
-        {mainBar.profilepic ? (
-          <img
-            src={`http://127.0.0.1:8000${mainBar.profilepic}`}
-            alt={mainBar.username}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-        ) : (
-          <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
-            {mainBar.username?.charAt(0).toUpperCase() || "U"}
-          </div>
-        )}
-        <h3 className="font-semibold text-gray-900 text-lg">
-          {mainBar.username}
-        </h3>
-      </div>
-      <div className="flex items-center space-x-2">
-        {[FiSearch, FiPhone, FiVideo, FiMoreVertical].map((Icon, idx) => (
-          <button
-            key={idx}
-            className="p-3 hover:bg-gray-100 rounded-full transition-colors"
-          >
-            <Icon className="w-5 h-5 text-gray-600" />
-          </button>
-        ))}
-      </div>
-    </div>
+    <>
+    <ChatHeader currentChat={currentChat}/>
+    </>
   );
 
   return (
