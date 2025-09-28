@@ -13,10 +13,11 @@ const socketconnect = (user_id, receiver_id, setMessages) => {
     try {
       const data = JSON.parse(event.data);
       
-      
-      if (setMessages && typeof setMessages === "function" && user_id!==data.data.message.recipient) {
-          console.log("📩 Incoming:", data.data.message);
-        setMessages(prev => [...prev, data.data.message]);
+      console.log(data)
+      if (setMessages && typeof setMessages === "function" && user_id===data.data.message.recipient) {
+        if (data.data.message !== "Connected"){
+          setMessages(prev => [data.data.message,...prev]);
+        }
 
       }
     } catch (err) {

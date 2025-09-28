@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [profile,setProfile] = useState(null)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -15,8 +16,11 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         try {
           const res = await axios.get("/api/auth/user/");
-
           setUser(res.data);
+          if (res.data.roles=='provider') {
+            const profile= await axios.get("api/get/userprofile/")
+          setProfile(profile.data)
+          }
         } catch (err) {
           Logout();
         }
@@ -83,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, login, Logout, register, error }}
+      value={{ user, loading, login, Logout, register, error ,profile}}
     >
       {children}
     </AuthContext.Provider>

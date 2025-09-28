@@ -30,3 +30,9 @@ class ProviderDetailCategorySerializers(serializers.ModelSerializer):
     class Meta:
         model = ProviderDetails
         exclude  = ('user',)
+
+class ProfileDetail(serializers.ModelSerializer):
+     userId = serializers.PrimaryKeyRelatedField(source='user',read_only = True)
+     class Meta:
+        model = ProviderDetails
+        fields = ['id','userId','profilepic',]

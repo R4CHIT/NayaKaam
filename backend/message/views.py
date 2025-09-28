@@ -53,7 +53,7 @@ class MessageView(generics.ListAPIView):
 
         return Message.objects.filter(
             Q(sender=user, recipient__id=pk) | Q(sender__id=pk, recipient=user)
-        ).order_by('id')
+        ).order_by('-id')
  
 class SearchUserView(generics.ListAPIView):
     serializer_class = UserSerializer

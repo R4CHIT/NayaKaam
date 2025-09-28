@@ -49,7 +49,7 @@ const Historygrid = ({ job, getStatusBadge, renderStars }) => {
           </p>
         </div>
 
-        {job.status === "completed" && renderStars(job.id)}
+        
       </div>
     </>
   );

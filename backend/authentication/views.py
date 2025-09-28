@@ -18,6 +18,8 @@ from django.conf import settings
 from django.utils.http import urlsafe_base64_encode
 from django.utils.http import urlsafe_base64_decode
 from .models import *
+from userprofile.serializers import ProfileDetail
+from userprofile.models import ProviderDetails
 
 class UserView(generics.GenericAPIView):
     permission_classes = [Isauthenticated]
@@ -55,10 +57,21 @@ class loginView(generics.GenericAPIView):
         if user is not None:
             refresh = RefreshToken.for_user(user)
             user_serializer = UserSerializer(user)
+            profile_data = None
+
+            if user.roles == 'provider':
+                try:
+                    provider_instance = ProviderDetails.objects.get(user=user)
+                    profile = ProfileDetail(provider_instance)
+                    profile_data = profile.data
+                except ProviderDetails.DoesNotExist:
+                    profile_data = None
+
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                'user': user_serializer.data
+                'user': user_serializer.data,
+                'profile': profile_data
             })
         else:
             return Response({

@@ -50,9 +50,7 @@ const Navigation = ({ role, notificationstatus, setNotificationStatus }) => {
           <li className="hover:text-yellow-300 transition-colors">
             <Link to="/profile">Profile</Link>
           </li>
-          <li className="hover:text-yellow-300 transition-colors">
-            <Link>My Bookings</Link>
-          </li>
+        
           <li className="hover:text-yellow-300 transition-colors">
             <Link to="/dashboard">Dashboard</Link>
           </li>

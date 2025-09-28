@@ -12,11 +12,13 @@ const ChatMain = () => {
   const [messages, setMessages] = useState([])
   const [mainBar,setMainBar]=useState([])
   const [chats, setChats] = useState([])
+  const[nextapi,setNextApi] = useState([])
   useEffect(() => {
     const fetchData = async () => {
         try {
             const res = await getUserIcon();
             setChats(res.data.results);
+            
         } catch (error) {
             console.error("Error fetching user icon:", error);
         }
@@ -45,12 +47,12 @@ const ChatMain = () => {
 
         <div className='flex-1 overflow-y-auto'>
                 {chats.map((chat) => (
-                  <ChatList key={chat.id} chat={chat} setSidebarOpen={setSidebarOpen} setSelectedChat={setSelectedChat} selectedChat={selectedChat} setMessages={setMessages} setMainBar={setMainBar}/>
+                  <ChatList key={chat.id} chat={chat} setSidebarOpen={setSidebarOpen} setSelectedChat={setSelectedChat} selectedChat={selectedChat} setMessages={setMessages} setMainBar={setMainBar} setNextApi={setNextApi}/>
                 ))}
               </div>
       </div>
 
-      <UserMessage messages={messages} currentChat={currentChat} setSidebarOpen={setSidebarOpen} messagesEndRef={messagesEndRef} mainBar={mainBar} setMessages={setMessages}/>
+      <UserMessage messages={messages} currentChat={currentChat} setSidebarOpen={setSidebarOpen} messagesEndRef={messagesEndRef} mainBar={mainBar} setMessages={setMessages} nextapi={nextapi} setNextApi={setNextApi}/>
 
       
       {sidebarOpen && (

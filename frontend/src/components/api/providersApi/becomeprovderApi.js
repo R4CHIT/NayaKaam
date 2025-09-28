@@ -12,6 +12,7 @@ const becomeprovderApi = async (providerData) => {
   formData.append("experience", providerData.experience);
   formData.append("price", providerData.price);
   formData.append("description", providerData.description);
+  formData.append('time',providerData.time);
   providerData.jobtype.forEach((id) => {
   formData.append("jobtype_ids", id);
 });

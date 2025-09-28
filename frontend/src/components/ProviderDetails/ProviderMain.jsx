@@ -19,7 +19,9 @@ const ProviderMain = ({ setShow }) => {
     experience: "",
     description: "",
     jobtype: [],
+    time:"",
   });
+  console.log(providerData)
 
   return (
     <div
@@ -69,7 +71,6 @@ const ProviderMain = ({ setShow }) => {
           )}
         </form>
 
-        {/* Footer */}
         <div className="mt-6 text-xs text-gray-400 text-center">
           By continuing, you agree to our{" "}
           <span className="text-green-600 hover:underline cursor-pointer">

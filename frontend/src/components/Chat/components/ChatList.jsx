@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import getMessage from "../../api/message/getMessage";
 import {socketconnect} from "../../api/message/socketconnect";
 import AuthContext from '../../../context/AuthContext'
-const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMessages,setMainBar}) => {
+const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMessages,setMainBar,setNextApi}) => {
   
   
   const formatTime = (timestamp) => {
@@ -16,6 +16,7 @@ const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMess
 const handleClick=async()=>{
   const res = await getMessage(chat.user.id)
   setMessages(res.data.results)
+  setNextApi(res.data.next)
   setMainBar({
     id:chat.user.id,
     username:chat.user.username,
