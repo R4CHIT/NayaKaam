@@ -83,39 +83,52 @@ const Navigation = ({ role, notificationstatus, setNotificationStatus }) => {
         <div className="w-6 h-0.5 bg-white"></div>
       </button>
 
-      {isMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-gradient-to-r from-blue-500 via-blue-500 to-blue-400 shadow-md">
-          <div className="flex flex-col p-4 space-y-4">
-            <Link
-              to="/services"
-              className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
-            >
-              Services
-            </Link>
-            <Link
-              to="/bookings"
-              className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
-            >
-              My Bookings
-            </Link>
-            <Link
-              to="/become-provider"
-              className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
-            >
-              Become a Pro
-            </Link>
-            <Link
-              to="/profile"
-              className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
-            >
-              Chat
-            </Link>
-            <button className="text-white text-2xl hover:text-yellow-300 transition-colors">
-              <FiBell />
-            </button>
-          </div>
-        </div>
+     {isMenuOpen && (
+  <div className="md:hidden absolute top-20 left-0 w-full bg-gradient-to-r from-blue-500 via-blue-500 to-blue-400 shadow-md">
+    <div className="flex flex-col p-4 space-y-4">
+      
+      <Link
+        to="/dashboard"
+        className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
+      >
+        Dashboard
+      </Link>
+      {role !== "provider" ? (
+        <>
+        <Link
+        to="/services"
+        className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
+      >
+        Services
+      </Link>
+        <Link
+          to="/becomeapro"
+          className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
+        >
+          Become a Pro
+        </Link>
+        </>
+      ) : (
+        <Link
+          to="/profile"
+          className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
+        >
+          Profile
+        </Link>
       )}
+      <Link
+        to="/chat"
+        className="text-white text-lg hover:text-yellow-300 transition-colors py-2"
+      >
+        Chats
+      </Link>
+      <button className="text-white text-2xl hover:text-yellow-300 transition-colors">
+        <FiBell />
+      </button>
+    </div>
+  </div>
+)}
+
 
       {show && (
         <NotificationMain

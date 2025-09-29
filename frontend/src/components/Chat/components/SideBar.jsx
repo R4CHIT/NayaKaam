@@ -5,7 +5,7 @@ import {
   FiSettings,
   FiX
 } from 'react-icons/fi'
-const SideBar = () => {
+const SideBar = ({sidebarOpen}) => {
   return (
     <>
       <div className='p-6 border-b border-gray-100'>
@@ -16,7 +16,7 @@ const SideBar = () => {
                 <FiSettings className='w-5 h-5 text-gray-600' />
               </button>
               <button 
-                onClick={() => setSidebarOpen(false)}
+                onClick={() => sidebarOpen(false)}
                 className='md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors'
               >
                 <FiX className='w-5 h-5 text-gray-600' />

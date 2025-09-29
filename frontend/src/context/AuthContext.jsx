@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }) => {
 
         setError(null);
         setUser(response.data.user);
+        setProfile(response.data.profile)
         navigate("/");
       }
     } catch (err) {

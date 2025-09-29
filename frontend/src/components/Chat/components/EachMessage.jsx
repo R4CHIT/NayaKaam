@@ -20,7 +20,7 @@ const EachMessage = ({msg}) => {
     const profile = !condition
               ? msg.sender_profile
               : msg.sender_profile;
-    console.log(msg)
+    
   return (
     <div>
       <div

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProviderMain from "../../ProviderDetails/ProviderMain";
+import WhyChooseUs from "./WhyChooseUs";
+import Description from "./Description";
+import Footer from "../Navbar/Footer";
 const Hero = ({ role }) => {
-  const [show, setShow] = useState(false);
+ const navigate =useNavigate()
   return (
     <div className="relative top-20">
-      <div className="min-h-[91.2vh] flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 lg:px-20 py-8 lg:py-0">
+      <div className="min-h-[91.2vh] flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 lg:px-20 py-8 lg:py-0 bg-white">
         <div className="flex-1 text-center lg:text-left mb-8 lg:mb-0 lg:pr-12">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#0F172A] leading-tight mb-6">
             Find Trusted
@@ -32,7 +35,7 @@ const Hero = ({ role }) => {
               </button>
               <button
                 className="border-2 border-[#38BDF8] text-[#38BDF8] px-8 py-4 rounded-xl text-lg font-semibold hover:bg-[#38BDF8] hover:text-white transition-colors"
-                onClick={() => navigate('becomeapro')}
+                onClick={() => navigate('/becomeapro')}
               >
                 Become a Provider
               </button>
@@ -74,7 +77,9 @@ const Hero = ({ role }) => {
           </div>
         </div>
       </div>
-      {show && <ProviderMain setShow={setShow} />}
+      <WhyChooseUs/>
+      <Description/>
+      <Footer/>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { FiMenu } from 'react-icons/fi'
 
 import SideBar from './components/SideBar'
 import ChatList from './components/ChatList'
@@ -6,27 +7,24 @@ import UserMessage from './components/UserMessage'
 import getUserIcon from '../api/message/getUserIcon'
 
 const ChatMain = () => {
-  
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [selectedChat, setSelectedChat] = useState(0)
   const [messages, setMessages] = useState([])
-  const [mainBar,setMainBar]=useState([])
+  const [mainBar, setMainBar] = useState([])
   const [chats, setChats] = useState([])
-  const[nextapi,setNextApi] = useState([])
+  const [nextapi, setNextApi] = useState([])
+
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const res = await getUserIcon();
-            setChats(res.data.results);
-            
-        } catch (error) {
-            console.error("Error fetching user icon:", error);
-        }
-    };
-
-    fetchData();
-}, []);
-
+      try {
+        const res = await getUserIcon()
+        setChats(res.data.results)
+      } catch (error) {
+        console.error("Error fetching user icon:", error)
+      }
+    }
+    fetchData()
+  }, [])
 
   const messagesEndRef = useRef(null)
   const currentChat = chats.find(chat => chat.id === selectedChat)
@@ -39,24 +37,49 @@ const ChatMain = () => {
     scrollToBottom()
   }, [messages])
 
-
   return (
-    <div className='h-screen pt-20 bg-white flex overflow-hidden'>
+    <div className='h-screen pt-20 bg-white flex overflow-hidden relative'>
+
+      <button
+  className='md:hidden absolute z-50 w-full right-5 h-12 flex justify-end items-center rounded-lg text-black shadow-md'
+  onClick={() => setSidebarOpen(!sidebarOpen)}
+>
+  <FiMenu size={22} />
+</button>
+
+
       <div className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 fixed md:static inset-y-0 left-0 z-50 w-80 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 ease-in-out`}>
-        <SideBar />
+        <SideBar sidebarOpen={sidebarOpen}/>
 
         <div className='flex-1 overflow-y-auto'>
-                {chats.map((chat) => (
-                  <ChatList key={chat.id} chat={chat} setSidebarOpen={setSidebarOpen} setSelectedChat={setSelectedChat} selectedChat={selectedChat} setMessages={setMessages} setMainBar={setMainBar} setNextApi={setNextApi}/>
-                ))}
-              </div>
+          {chats.map((chat) => (
+            <ChatList
+              key={chat.id}
+              chat={chat}
+              setSidebarOpen={setSidebarOpen}
+              setSelectedChat={setSelectedChat}
+              selectedChat={selectedChat}
+              setMessages={setMessages}
+              setMainBar={setMainBar}
+              setNextApi={setNextApi}
+            />
+          ))}
+        </div>
       </div>
 
-      <UserMessage messages={messages} currentChat={currentChat} setSidebarOpen={setSidebarOpen} messagesEndRef={messagesEndRef} mainBar={mainBar} setMessages={setMessages} nextapi={nextapi} setNextApi={setNextApi}/>
+      <UserMessage
+        messages={messages}
+        currentChat={currentChat}
+        setSidebarOpen={setSidebarOpen}
+        messagesEndRef={messagesEndRef}
+        mainBar={mainBar}
+        setMessages={setMessages}
+        nextapi={nextapi}
+        setNextApi={setNextApi}
+      />
 
-      
       {sidebarOpen && (
-        <div 
+        <div
           className='md:hidden fixed inset-0 bg-black bg-opacity-50 z-40'
           onClick={() => setSidebarOpen(false)}
         />
