@@ -2,7 +2,7 @@ let socket;
 
 const socketconnect = (user_id, receiver_id, setMessages) => {
   socket = new WebSocket(
-    `ws://localhost:8000/ws/message/${user_id}/${receiver_id}/`
+    `ws://nayakaam.onrender.com/ws/message/${user_id}/${receiver_id}/`
   );
 
   socket.onopen = () => {

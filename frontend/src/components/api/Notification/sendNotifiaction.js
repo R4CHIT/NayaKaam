@@ -3,7 +3,7 @@ const sendNotifiaction = (user_id,data,username) => {
   if (!user_id) return;
 
   const socket = new WebSocket(
-    `ws://localhost:8000/ws/notification/${user_id}/`
+    `ws://nayakaam.onrender.com/ws/notification/${user_id}/`
   );
 
   socket.onopen = () => {

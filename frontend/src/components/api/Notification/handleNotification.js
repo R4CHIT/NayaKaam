@@ -2,7 +2,7 @@ const handleNotification = (user_id, setNotifications) => {
   if (!user_id || typeof setNotifications !== "function") return;
 
   const socket = new WebSocket(
-    `ws://localhost:8000/ws/notification/${user_id}/`
+    `ws://nayakaam.onrender.com/ws/notification/${user_id}/`
   );
   socket.onmessage = (e) => {
     try {
