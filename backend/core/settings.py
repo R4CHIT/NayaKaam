@@ -41,22 +41,25 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'daphne',
     'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'authentication',
-    'userprofile',
-    'category',
-    'booking',
     'django_filters',
-    'notification',
-    'message',
+
+    'authentication.apps.AuthenticationConfig',
+    'userprofile.apps.UserprofileConfig',
+    'category.apps.CategoryConfig',
+    'booking.apps.BookingConfig',
+    'notification.apps.NotificationConfig',
+    'message.apps.MessageConfig',
 ]
 
 MIDDLEWARE = [
