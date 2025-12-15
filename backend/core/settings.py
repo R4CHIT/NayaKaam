@@ -32,7 +32,9 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "naya-kaam.vercel.app",
+    "nayakaam.onrender.com",
 ]
+
 
 
 
