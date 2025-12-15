@@ -56,7 +56,6 @@ INSTALLED_APPS = [
 
     'authentication.apps.AuthenticationConfig',
     'userprofile.apps.UserprofileConfig',
-    'category.apps.CategoryConfig',
     'booking.apps.BookingConfig',
     'notification.apps.NotificationConfig',
     'message.apps.MessageConfig',
