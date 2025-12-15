@@ -28,7 +28,12 @@ SECRET_KEY = 'django-insecure-v4sb1#955d*9ntu7cb+hm+%&^g#2*xoh#nx25pz_ez=k*_hlxn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "naya-kaam.vercel.app",
+]
+
 
 
 # Application definition
@@ -203,10 +208,12 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://naya-kaam.vercel.app"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
+    "https://naya-kaam.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -215,12 +222,13 @@ CORS_ALLOW_CREDENTIALS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [
+                "redis://:nbyssHRw4077bj3vsxuMJ4dXO3CXpR16@redis-18220.crce263.ap-south-1-1.ec2.cloud.redislabs.com:18220"
+            ],
         },
     },
 }

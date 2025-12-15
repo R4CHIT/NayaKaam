@@ -109,7 +109,7 @@ class SendResetEmail(generics.GenericAPIView):
             user = User.objects.get(email=email)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = PasswordResetTokenGenerator().make_token(user)
-            reset_url = f"http://localhost:5173/auth/reset-password/{uid}/{token}"
+            reset_url = f"https://naya-kaam.vercel.app/auth/reset-password/{uid}/{token}"
             send_mail(
                 "Reset Your Password",
                 f"Click this link to reset your password: {reset_url}",
