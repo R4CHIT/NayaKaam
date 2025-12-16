@@ -6,7 +6,6 @@ import LoadingEffect from "../ui/LoadingEffect";
 
 const NotificationMain = ({ setShow, notifications, setNotificationStatus, setApi, setUnread }) => {
   const notificationList = notifications.results || [];
-
   useEffect(() => {
     setNotificationStatus(false);
   }, []);

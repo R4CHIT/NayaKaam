@@ -1,10 +1,16 @@
 import React, { useContext, useState } from "react";
 import getMessage from "../../api/message/getMessage";
-import {socketconnect} from "../../api/message/socketconnect";
-import AuthContext from '../../../context/AuthContext'
-const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMessages,setMainBar,setNextApi}) => {
-  
-  
+import { socketconnect } from "../../api/message/socketconnect";
+import AuthContext from "../../../context/AuthContext";
+const ChatList = ({
+  chat,
+  setSidebarOpen,
+  setSelectedChat,
+  selectedChat,
+  setMessages,
+  setMainBar,
+  setNextApi,
+}) => {
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
     return `${date.getHours()}:${date
@@ -12,27 +18,25 @@ const ChatList = ({ chat, setSidebarOpen, setSelectedChat, selectedChat ,setMess
       .toString()
       .padStart(2, "0")}`;
   };
-  const {user}=useContext(AuthContext)
-const handleClick=async()=>{
-  const res = await getMessage(chat.user.id)
-  setMessages(res.data.results)
-  setNextApi(res.data.next)
-  setMainBar({
-    id:chat.user.id,
-    username:chat.user.username,
-    profilepic:chat.user.profilepic
-    
-  })
-  await socketconnect(user?.id,chat.user.id,setMessages)
-  
-}
+  const { user } = useContext(AuthContext);
+  const handleClick = async () => {
+    const res = await getMessage(chat.user.id);
+    setMessages(res.data.results);
+    setNextApi(res.data.next);
+    setMainBar({
+      id: chat.user.id,
+      username: chat.user.username,
+      profilepic: chat.user.profilepic,
+    });
+    await socketconnect(user?.id, chat.user.id, setMessages);
+  };
   return (
     <div
       key={chat.id}
       onClick={() => {
         setSelectedChat(chat.id);
         setSidebarOpen(false);
-        handleClick()
+        handleClick();
       }}
       className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors border-l-4 ${
         selectedChat === chat.id
@@ -44,8 +48,12 @@ const handleClick=async()=>{
         <div className="relative w-12 h-12">
           {chat.user.profilepic ? (
             <img
-              src={`http://127.0.0.1:8000${chat.user.profilepic}`}
-              alt={chat.user.username}
+              src={
+                chat.user?.profilepic
+                  ? `https://nayakaam.onrender.com${chat.user.profilepic}`
+                  : "/default-avatar.png"
+              }
+              alt={chat.user?.username || "user"}
               className="w-12 h-12 rounded-full object-cover"
             />
           ) : (
