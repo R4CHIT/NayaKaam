@@ -20,6 +20,10 @@ from django.utils.http import urlsafe_base64_decode
 from .models import *
 from userprofile.serializers import ProfileDetail
 from userprofile.models import ProviderDetails
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+import cloudinary.uploader
+from rest_framework.views import APIView
 
 class UserView(generics.GenericAPIView):
     permission_classes = [Isauthenticated]
@@ -33,11 +37,12 @@ class UserView(generics.GenericAPIView):
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permisssion_classes = (AllowAny,)
+    authentication_classes = []
     serializer_class = RegisterSerializer
 
 class loginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-
+    authentication_classes = []
     def post(self, request, *args, **kwargs):
         identifier = request.data.get('username') 
         password = request.data.get('password')
@@ -71,7 +76,8 @@ class loginView(generics.GenericAPIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 'user': user_serializer.data,
-                'profile': profile_data
+                'profile': profile_data,
+                'auth_type':'google',
             })
         else:
             return Response({
@@ -161,7 +167,7 @@ class ChangeUserInfo(generics.UpdateAPIView):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-#Delete Account
+
 class DeleteAccount(generics.DestroyAPIView):
     permission_classes = [Isauthenticated]
 
@@ -173,3 +179,76 @@ class DeleteAccount(generics.DestroyAPIView):
             return Response("Password Doesn't match!", status=400)
         request.user.delete()
         return Response("Account deleted successfully", status=200)
+    
+
+
+class GoogleSignupView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        token = request.data.get('access_token')
+        try:
+            idinfo = id_token.verify_oauth2_token(token, google_requests.Request())
+            email = idinfo["email"]
+            username = email.split("@")[0]
+            image_url = idinfo.get("picture")
+            fullname = idinfo.get('name')
+
+            if User.objects.filter(email=email).exists():
+                return Response({"error": "User already exists. Please log in."}, status=400)
+            user = User.objects.create(
+                username=username,
+                email=email,
+            )
+            user.auth_type='google'
+            user.fullname = fullname
+            user.save()
+
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+
+            user_serializer = UserSerializer(user)
+
+            return Response({
+                'token': {
+                    'access': str(refresh.access_token),
+                    'refresh': str(refresh)
+                },
+                'message':"Account Created",
+                'user': user_serializer.data,
+                'auth_type':'google',
+            })
+
+        except ValueError:
+            return Response({"error": "Invalid Google token"}, status=400)
+
+class GoogleLoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        token = request.data.get('access_token')
+        if not token:
+            return Response({"error": "No token provided"}, status=400)
+
+        try:
+            idinfo = id_token.verify_oauth2_token(token, google_requests.Request())
+            email = idinfo["email"]
+
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                return Response({"error": "User does not exist. Please sign up."}, status=400)
+
+            refresh = RefreshToken.for_user(user)
+
+            return Response({
+                'token': {
+                    'access': str(refresh.access_token),
+                    'refresh': str(refresh)
+                },
+                'user': UserSerializer(user).data,
+                'auth_type':'google',
+            })
+
+        except ValueError:
+            return Response({"error": "Invalid Google token"}, status=400)

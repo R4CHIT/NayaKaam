@@ -38,7 +38,8 @@ urlpatterns = [
     path("api/auth/user/", UserView.as_view(),name="user_view"), 
     path('api/auth/changepassword/',changePassword.as_view(),name='change_password'),
     path("api/changeuserinfo/", ChangeUserInfo.as_view(), name=""),
-
+    path('api/auth/register-google/',GoogleSignupView.as_view(),name="Google-register"),
+    path('api/auth/login-google/',GoogleLoginView.as_view(),name="Google-Login"),
     #delete account very critical
     path("api/deleteaccount/", DeleteAccount.as_view(), name="delete_account"),
 

@@ -34,7 +34,7 @@ const EachMessage = ({msg}) => {
                   {!isCurrentUser && (
                     profile?.profilepic ? (
                       <img
-                        src={`http://127.0.0.1:8000${profile.profilepic}`}
+                        src={`${profile.profilepic}`}
                         alt={profile?.username || "User"}
                         className="w-8 h-8 rounded-full object-cover"
                       />

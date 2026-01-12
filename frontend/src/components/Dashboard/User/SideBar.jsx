@@ -22,7 +22,7 @@ const SideBar = ({ active, setActive, setIsOpen, isOpen }) => {
         </button>
 
         <h2 className="text-2xl font-bold text-blue-600 text-center mb-2">
-          {condition ? 'Admin' : 'User'} Dashboard
+          {condition ? '' : 'User'} Dashboard
         </h2>
        </div>
 

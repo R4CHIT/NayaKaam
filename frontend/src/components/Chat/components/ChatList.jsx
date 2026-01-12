@@ -50,7 +50,7 @@ const ChatList = ({
             <img
               src={
                 chat.user?.profilepic
-                  ? `https://nayakaam.onrender.com${chat.user.profilepic}`
+                  ? `${chat.user.profilepic}`
                   : "/default-avatar.png"
               }
               alt={chat.user?.username || "user"}

@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'daphne',
     'channels',
 
+    "cloudinary",
+    "cloudinary_storage",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,7 +141,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
+CLOUDINARY_URL = config("CLOUDINARY_URL")
+import cloudinary
 
+cloudinary.config(
+    cloud_name='dpl5rzsbg',
+    api_key='995991813626684',
+    api_secret='z7htqZx5hjnByiyQu6GBuPeUEhE'
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -230,7 +243,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [
-                "redis://:nbyssHRw4077bj3vsxuMJ4dXO3CXpR16@redis-18220.crce263.ap-south-1-1.ec2.cloud.redislabs.com:18220"
+                "redis://:CoqSmaBxwzwq6H4Hodxz6EmvMBXJCUwq@redis-17428.c212.ap-south-1-1.ec2.cloud.redislabs.com:17428"
             ],
         },
     },

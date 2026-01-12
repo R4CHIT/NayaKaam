@@ -18,7 +18,7 @@ const Card = ({ provider, setEdit, edit }) => {
           className="h-28 w-full rounded-t-lg bg-cover bg-center relative"
           style={{
             backgroundImage: provider.profilepic
-              ? `url(http://127.0.0.1:8000${provider.profilepic})`
+              ? `url(${provider.profilepic})`
               : `url('/default-cover.jpg')`,
             filter: "brightness(0.7)",
           }}
@@ -28,7 +28,7 @@ const Card = ({ provider, setEdit, edit }) => {
             <img
               src={
                 provider.profilepic
-                  ? `http://127.0.0.1:8000${provider.profilepic}`
+                  ? `${provider.profilepic}`
                   : "/default-avatar.png"
               }
               alt={provider.fullname}

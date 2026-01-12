@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import InputDetails from "../ui/InputDetails";
 import Button from "../ui/Button";
 import LoadingEffect from "../ui/LoadingEffect";
+import GoogleAuth from "./SocialLogin/GoogleAuth";
 
 function Register() {
   
@@ -82,6 +83,7 @@ function Register() {
       title={loading ?(<LoadingEffect />) : "Register"}
       type={"submit"}
     />
+    <GoogleAuth task={'register'}/>
 
 
     <p className="text-center text-slate-700 text-sm">

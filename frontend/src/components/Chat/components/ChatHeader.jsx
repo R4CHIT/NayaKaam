@@ -13,7 +13,7 @@ const ChatHeader = ({ currentChat }) => {
         {currentChat.user.profilepic ? (
           <div className="relative">
             <img
-              src={`"https://nayakaam.onrender.com/"${currentChat.user.profilepic}`}
+              src={`${currentChat.user.profilepic}`}
               alt={currentChat.user.username}
               className="w-12 h-12 rounded-full object-cover"
             />

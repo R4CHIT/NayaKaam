@@ -6,7 +6,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):   
     class Meta:
         model = User
-        fields = ('id', 'username', 'email','roles',)
+        fields = ('id', 'username', 'email','roles','auth_type')
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,6 +18,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['username'],
             validated_data['email'],
             validated_data['password'],
+            auth_type='system'
         )
         return user
 

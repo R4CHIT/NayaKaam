@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from category.models import Category
+from cloudinary.models import CloudinaryField
 
 class ProviderDetails(models.Model):
     user = models.ForeignKey(
@@ -11,7 +12,7 @@ class ProviderDetails(models.Model):
     )
     fullname = models.CharField(max_length=50, blank=True, null=True)
     contactnumber = models.CharField(max_length=10)
-    profilepic = models.ImageField(upload_to='ProvidersPictures/', blank=True, null=True)
+    profilepic = CloudinaryField('image')
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     time= models.CharField(max_length=20,blank=True,null=True)

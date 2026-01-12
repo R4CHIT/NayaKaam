@@ -21,8 +21,6 @@ const ProviderMain = ({ setShow }) => {
     jobtype: [],
     time:"",
   });
-  console.log(providerData)
-
   return (
     <div
       className="flex justify-center items-center min-h-[100vh] px-4 pt-20

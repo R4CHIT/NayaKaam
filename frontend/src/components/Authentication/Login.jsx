@@ -5,6 +5,8 @@ import InputDetails from "../ui/InputDetails";
 import { useRef } from "react";
 import Button from "../ui/Button";
 import LoadingEffect from "../ui/LoadingEffect";
+import GoogleAuth from "./SocialLogin/GoogleAuth";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -65,7 +67,7 @@ function Login() {
       <Button title={loading ? <LoadingEffect /> : "Login"} type={"submit"}>
         Login
       </Button>
-
+      <GoogleAuth task={'login'}/>
       <p className="text-center text-slate-600 text-sm">
         <Link
           to="/auth/reset"

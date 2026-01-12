@@ -16,6 +16,13 @@ class ChatPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
+    def get_paginated_response(self, data):
+        response = super().get_paginated_response(data)
+        if response.data.get('next'):
+            response.data['next'] = response.data['next'].replace('http://', 'https://')
+        if response.data.get('previous'):
+            response.data['previous'] = response.data['previous'].replace('http://', 'https://')
+        return response
 
 
 class UserMessageIcon(generics.ListAPIView):

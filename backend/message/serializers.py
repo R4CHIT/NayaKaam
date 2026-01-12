@@ -60,13 +60,33 @@ class SidebarMessageSerializer(serializers.ModelSerializer):
         fields = ['id', 'content', 'timestamp', 'read', 'user']
 
     def get_user(self, obj):
-        """Return the other user (not the logged-in user)"""
-        request_user = self.context['request'].user
+        """Return the other user (not the logged-in user) with full profile pic URL"""
+        request = self.context.get('request')
+        request_user = request.user
         other_user = obj.recipient if obj.sender == request_user else obj.sender
 
+        # If provider
         if other_user.roles == "provider":
             provider = other_user.providerdetails_set.first()
             if provider:
-                return ProviderSerializer(provider).data
-            return {}
-        return UserSerializer(other_user).data
+                data = ProviderSerializer(provider).data
+                if provider.profilepic:
+                    # full URL
+                    if request:
+                        data['profilepic'] = request.build_absolute_uri(provider.profilepic.url)
+                    else:
+                        data['profilepic'] = provider.profilepic.url
+                else:
+                    data['profilepic'] = None
+                return data
+
+        # Normal user
+        data = UserSerializer(other_user).data
+        if hasattr(other_user, 'profilepic') and other_user.profilepic:
+            if request:
+                data['profilepic'] = request.build_absolute_uri(other_user.profilepic.url)
+            else:
+                data['profilepic'] = other_user.profilepic.url
+        else:
+            data['profilepic'] = None
+        return data

@@ -53,8 +53,6 @@ const JobDetails = ({ setStage, providerData, setProviderData }) => {
   
   temp.time = `${firstactivetimeRef.current.value}-${secondactivetimeRef.current.value}`;
   setProviderData(temp);
-
-  console.log(temp)
   becomeprovderApi(temp);
   location.href = '/'
 }

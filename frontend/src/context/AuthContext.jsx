@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect,useCallback } from "react";
 import axios from "../axios";
 
 const AuthContext = createContext();
@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [profile,setProfile] = useState(null)
+  const [successMessage,setSuccessMessage] = useState('')
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
           setProfile(profile.data)
           }
         } catch (err) {
-          Logout();
+          
         }
       }
       setLoading(false);
@@ -83,12 +84,44 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("refreshtoken");
     setUser(null);
     delete axios.defaults.headers.common["Authorization"];
-    navigate('/auth/login')
+    if(navigate){navigate('/auth/login')}
   };
+
+const googleLogin = useCallback(async (credentialResponse, navigate,task) => {
+    setLoading(true);
+    setSuccessMessage("");
+    try {
+      const token = credentialResponse.credential;
+      if (!token) {
+        setError({ message: "Google credential missing" });
+        setLoading(false);
+        return;
+      }
+      let res;
+      if(task=="login"){
+      res = await axios.post("/api/auth/login-google/", { access_token: token });
+      }else
+      res = await axios.post("/api/auth/register-google/", { access_token: token });
+      const { access, refresh } = res.data.token;
+
+      localStorage.setItem("accesstoken", access);
+      localStorage.setItem("refreshtoken", refresh);
+      
+      setUser(res.data.user);
+      setError(null);
+      setSuccessMessage("Google login successful");
+
+      if (navigate) navigate("/");
+    } catch (err) {
+      setError({ message: "Google login failed" });
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, login, Logout, register, error ,profile}}
+      value={{ user, loading, login, Logout, register, error ,profile,googleLogin}}
     >
       {children}
     </AuthContext.Provider>

@@ -46,7 +46,7 @@ const ProvderCard = ({ provider }) => {
     
       <div className="flex items-center gap-4">
         <img
-          src={`http://127.0.0.1:8000${provider.profilepic}`}
+          src={`${provider.profilepic}`}
           alt={provider.fullname}
           className="w-16 h-16 rounded-full object-cover"
         />
